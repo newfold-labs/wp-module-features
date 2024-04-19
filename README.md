@@ -20,12 +20,7 @@ This module manages feature registration and standardizes verifying whether a fe
 - A feature can be disabled.
 - A feature status can be checked.
 
-## Installation
-
 ## API
-- Enable (PHP, REST API, WP-CLI, JS)
-- Disable (PHP, REST API, WP-CLI, JS)
-- Is Enabled (PHP, REST API, WP-CLI, JS)
 
 ### PHP Functions
 - enable($name)
