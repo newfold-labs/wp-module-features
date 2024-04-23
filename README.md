@@ -48,12 +48,12 @@ This module manages feature registration and standardizes verifying whether a fe
 - newfold features isEnabled {featureName}
 
 ## Actions & Filters
-- newfold/features/isEnabled
+- `newfold/features/filter/isEnabled`
   - isEnabled
   - Feature name
-- newfold/features/enable
+- `newfold/features/action/onEnable`
   - Feature name
-- newfold/features/disable
+- `newfold/features/action/onDisable`
   - Feature name
 
 ## Feature PHP Class
