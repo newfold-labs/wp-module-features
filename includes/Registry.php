@@ -1,5 +1,5 @@
 <?php
-namespace NewfoldLabs\WP\Features;
+namespace NewfoldLabs\WP\Module\Features;
 
 use WP_Forge\Options\Options;
 

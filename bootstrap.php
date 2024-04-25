@@ -1,34 +1,20 @@
 <?php
-
-namespace NewfoldLabs\WP\Features;
-
-use NewfoldLabs\WP\Features\Feature;
-// use NewfoldLabs\WP\Features\Features;
-use NewfoldLabs\WP\Features\Registry;
-
 /**
- * Register a Feature - We're doing this via a class existing in the module and 
+ * Features Boostrap
  *
- * @param String $name - the feature name/id
- * @param String $options - array of callbacks and options
- * @return Feature - value of the registered Feature
+ * @package NewfoldLabs\WP\Module\Features
  */
-// function register_feature( $name, $options ) {
-    // create Feature
-
-    // add Feature to Features
-
-// }
+use NewfoldLabs\WP\Module\Features\Registry;
+// use NewfoldLabs\WP\Features\Feature;
 
 // Create registry
 $newfold_features = new Registry();
 
 // Find extended instances of the Feature class and add to the Registry
 foreach ( get_declared_classes() as $class ) {
-    if( is_subclass_of( $class, 'NewfoldLabs/WP/Features/Feature' ) ) {
+    if( is_subclass_of( $class, 'NewfoldLabs/WP/Module/Features/Feature' ) ) {
         // instantiate this feature class and pass the registry
         $featureInstance = new $class( $newfold_features );
-        echo $featureInstance->name;
         // add instantiated feature class to the registry
         $newfold_features->set( $featureInstance->name, $featureInstance->isEnabled );
     }
@@ -49,3 +35,18 @@ if ( function_exists( 'add_filter' ) ) {
         1
 	);
 }
+
+
+/**
+ * Questions:
+ * 
+ * Should hooks onEnable and onDisable hooks be within the can_toggle check?
+ * 
+ * Should we have beforeEnable and afterEnable action hooks instead of the onEnable? etc.
+ * 
+ * How to add unit tests for the Registry, the Features base class and the API endpoints and CLI commands.
+ * 
+ * 
+ * 
+ * 
+ */

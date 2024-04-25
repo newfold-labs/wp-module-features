@@ -1,9 +1,9 @@
 <?php
 // File: feature.php
 
-namespace NewfoldLabs\WP\Features;
+namespace NewfoldLabs\WP\Module\Features;
 
-use NewfoldLabs\WP\Features\Registry;
+use NewfoldLabs\WP\Module\Features\Registry;
 
 /**
  * Base class for a feature in the Newfold plugin.

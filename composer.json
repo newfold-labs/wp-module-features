@@ -31,7 +31,10 @@
     "autoload": {
         "psr-4": {
             "NewfoldLabs\\WP\\Module\\Features\\": "includes"
-        }
+        },
+        "files": [
+            "bootstrap.php"
+        ]
     },
     "config": {
         "allow-plugins": {
