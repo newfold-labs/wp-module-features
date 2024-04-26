@@ -4,35 +4,30 @@ namespace NewfoldLabs\WP\Module\Features;
 use WP_Forge\Options\Options;
 
 /**
- * Registry for managing features within the plugin.
+ * Registry of Feature instances
+ * For managing features within brand plugins.
  */
 class Registry {
 
     /**
-     * Name of option
-     * 
-     * @var string
+     * Array of Features Instances
+     * array ( $name => Instance )
      */
-    private $option_name = 'newfold_features';
+    private $features;
 
     /**
      * Options object
      * See https://github.com/wp-forge/wp-options
+     * Key value pairs for feature name and enabled boolean
+     * This is saved to options table in database
      */
     private $options;
 
     /**
      * Constructor
      */
-    public function __construct() {
-        $this->options = new Options($this->option_name);
-    }
-
-    /**
-     * Get Options
-     */
-    public function getOptions() {
-        return $this->options;
+    public function __construct($option_name = 'newfold_features') {
+        $this->options = new Options($option_name);
     }
 
     /**
@@ -42,27 +37,32 @@ class Registry {
      * @return bool True if registered, false otherwise.
      */
     public function has($name) {
-        return $this->options->has($name);
+        return isset( $this->features[ $name ] );
     }
 
     /**
      * Registers a feature with the registry.
      *
      * @param string $name The feature name.
-     * @param mixed $value The feature value.
+     * @param mixed $value The feature instance.
      */
-    public function set($name, $value) {
-        $this->options->set($name, $value);
+    public function set($class) {
+        $instance = new $class($this->options);
+        $name = $instance->getName();
+        // check if feature already registered
+        // if ( ! $this->has( $name ) ) {
+			$this->features[ $name ] = $instance;
+        // }
     }
 
     /**
-     * Retrieves a feature value by name.
+     * Retrieves a feature instance by name.
      *
      * @param string $name The feature name.
-     * @return mixed|null The feature value if found, null otherwise.
+     * @return mixed|null The feature instance if found, null otherwise.
      */
     public function get($name) {
-        return $this->options->get($name);
+        return $this->features[$name];
     }
 
     /**
@@ -71,7 +71,7 @@ class Registry {
      * @param string $name The feature name.
      */
     public function remove($name) {
-        return $this->options->delete($name);
+        unset( $this->features[ $name ] );
     }
 
     /**
@@ -80,11 +80,11 @@ class Registry {
      * @return array The list of feature names.
      */
     public function keys() {
-        return array_keys($this->all());
+        return array_keys($this->features);
     }
 
     /**
-     * Retrieves all registered features and values
+     * Retrieves all registered features and values from option
      *
      * @return array The list of features.
      */
@@ -97,6 +97,8 @@ class Registry {
      */
     public function reset() {
         // populate with an empty array
+        $this->features = array();
         $this->options->populate(array());
     }
+
 }

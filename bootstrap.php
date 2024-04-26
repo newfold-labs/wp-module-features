@@ -7,17 +7,29 @@
 use NewfoldLabs\WP\Module\Features\Registry;
 use NewfoldLabs\WP\Module\Features\Feature;
 
-// Create registry
-$newfold_features = new Registry();
+require_once BLUEHOST_PLUGIN_DIR . '/vendor/newfold-labs/wp-module-staging/includes/StagingFeature.php';
 
-// Find extended instances of the Feature class and add to the Registry
-foreach ( get_declared_classes() as $class ) {
-    if( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
-        // instantiate this feature class and pass the registry
-        $featureInstance = new $class( $newfold_features );
-        // add instantiated feature class to the registry
-        $newfold_features->set( $featureInstance->getName(), $featureInstance->isEnabled() );
-    }
+// Create registry
+$nfd_feature_registry = new Registry();
+
+if ( function_exists( 'add_action' ) ) {
+
+	// Find and add all features to registry
+	add_action(
+		'plugins_loaded',
+		function () {
+            global $nfd_feature_registry;
+            // Find extended instances of the Feature class and add to the Registry
+            foreach ( get_declared_classes() as $class ) {
+                if( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
+                    // error_log( 'NewfoldLabs\WP\Module\Features child class found: '.$class );
+                    // add class to registry and instantiate
+                    $nfd_feature_registry->set( $class );
+                }
+            }
+        },
+        1
+    );
 }
 
 // Add default filter to make any feature null value return false

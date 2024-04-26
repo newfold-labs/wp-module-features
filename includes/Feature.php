@@ -4,6 +4,7 @@
 namespace NewfoldLabs\WP\Module\Features;
 
 use NewfoldLabs\WP\Module\Features\Registry;
+use WP_Forge\Options\Options;
 
 /**
  * Base class for a feature in the Newfold plugin.
@@ -35,12 +36,12 @@ abstract class Feature {
     /**
      * Constructor
      */
-    final function __construct(Registry $options) {
-        // assign global options
+    final function __construct($options) {
+        // assign options
         $this->options = $options;
 
         // set initial value
-        $this->options->set($this->name, $this->value);
+        $this->setOption();
 
         // only initialize if enabled
         if ( $this->isEnabled() ) {
@@ -60,6 +61,20 @@ abstract class Feature {
         // do initilization stuff
         // does nothing here in the base class
     }
+    
+    /**
+     * Set options
+     */
+    private function setOption() {
+        $this->options->set($this->name, $this->value);
+    }
+    
+    /**
+     * Set options
+     */
+    private function getOption() {
+        return $this->options->get($this->name);
+    }
 
     /**
      * Enables the feature.
@@ -71,7 +86,8 @@ abstract class Feature {
             // specific feature onEnable action
             do_action("newfold/features/action/onEnable/{$this->name}");
 
-            $this->options->set($this->name, true);
+            $this->value = true;
+            $this->setOption();
         }
     }
 
@@ -86,7 +102,8 @@ abstract class Feature {
             // specific feature onDisable action
             do_action("newfold/features/action/onDisable/{$this->name}");
 
-            $this->options->set($this->name, false);
+            $this->value = false;
+            $this->setOption();
         }
     }
 
@@ -102,7 +119,7 @@ abstract class Feature {
             apply_filters(
                 // generic isEnabled filter
                 "newfold/features/filter/isEnabled",
-                $this->options->get($this->name)
+                $this->getOption()
             )
         );
     }
