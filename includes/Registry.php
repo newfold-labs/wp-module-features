@@ -25,14 +25,14 @@ class Registry {
      * Constructor
      */
     public function __construct() {
-        $options = new Options($option_name);
+        $this->options = new Options($this->option_name);
     }
 
     /**
      * Get Options
      */
     public function getOptions() {
-        return $this->$options;
+        return $this->options;
     }
 
     /**
@@ -42,27 +42,27 @@ class Registry {
      * @return bool True if registered, false otherwise.
      */
     public function has($name) {
-        return $this->$options->has($name);
+        return $this->options->has($name);
     }
 
     /**
      * Registers a feature with the registry.
      *
      * @param string $name The feature name.
-     * @param mixed $instance The feature instance.
+     * @param mixed $value The feature value.
      */
     public function set($name, $value) {
-        $this->$options->set($name, $value);
+        $this->options->set($name, $value);
     }
 
     /**
-     * Retrieves a feature instance by name.
+     * Retrieves a feature value by name.
      *
      * @param string $name The feature name.
-     * @return mixed|null The feature instance if found, null otherwise.
+     * @return mixed|null The feature value if found, null otherwise.
      */
     public function get($name) {
-        return $this->$options->get($name);
+        return $this->options->get($name);
     }
 
     /**
@@ -71,7 +71,7 @@ class Registry {
      * @param string $name The feature name.
      */
     public function remove($name) {
-        return $this->$options->delete($name);
+        return $this->options->delete($name);
     }
 
     /**
@@ -89,7 +89,7 @@ class Registry {
      * @return array The list of features.
      */
     public function all() {
-        return $this->$options->all();
+        return $this->options->all();
     }
 
     /**
@@ -97,6 +97,6 @@ class Registry {
      */
     public function reset() {
         // populate with an empty array
-        $this->$options->populate(array());
+        $this->options->populate(array());
     }
 }

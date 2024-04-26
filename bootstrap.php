@@ -5,18 +5,18 @@
  * @package NewfoldLabs\WP\Module\Features
  */
 use NewfoldLabs\WP\Module\Features\Registry;
-// use NewfoldLabs\WP\Features\Feature;
+use NewfoldLabs\WP\Module\Features\Feature;
 
 // Create registry
 $newfold_features = new Registry();
 
 // Find extended instances of the Feature class and add to the Registry
 foreach ( get_declared_classes() as $class ) {
-    if( is_subclass_of( $class, 'NewfoldLabs/WP/Module/Features/Feature' ) ) {
+    if( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
         // instantiate this feature class and pass the registry
         $featureInstance = new $class( $newfold_features );
         // add instantiated feature class to the registry
-        $newfold_features->set( $featureInstance->name, $featureInstance->isEnabled );
+        $newfold_features->set( $featureInstance->getName(), $featureInstance->isEnabled() );
     }
 }
 
@@ -44,9 +44,11 @@ if ( function_exists( 'add_filter' ) ) {
  * 
  * Should we have beforeEnable and afterEnable action hooks instead of the onEnable? etc.
  * 
+ * Should isEnabled be used when saving to db?
+ * - Staging has a filter for the enabled value when context is atomic, but this still saves as true to db.
+ * 
  * How to add unit tests for the Registry, the Features base class and the API endpoints and CLI commands.
  * 
- * 
- * 
+ * Autoloading troubleshooting and `get_declared_classes` and `is_subclass_of`
  * 
  */

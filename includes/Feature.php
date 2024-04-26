@@ -37,10 +37,10 @@ abstract class Feature {
      */
     final function __construct(Registry $options) {
         // assign global options
-        $this->$options = $options;
+        $this->options = $options;
 
         // set initial value
-        $this->$options->set($this->$name, $this->$value);
+        $this->options->set($this->name, $this->value);
 
         // only initialize if enabled
         if ( $this->isEnabled() ) {
@@ -67,11 +67,11 @@ abstract class Feature {
     public function enable() {
         if ( $this->canToggleFeature()) {
             // generic feature onEnable action
-            do_action("newfold/features/action/onEnable", $this->$name);
+            do_action("newfold/features/action/onEnable", $this->name);
             // specific feature onEnable action
-            do_action("newfold/features/action/onEnable/{$this->$name}");
+            do_action("newfold/features/action/onEnable/{$this->name}");
 
-            $this->$options->set($this->$name, true);
+            $this->options->set($this->name, true);
         }
     }
 
@@ -82,11 +82,11 @@ abstract class Feature {
         if ( $this->canToggleFeature()) {
 
             // generic feature onDisable action
-            do_action("newfold/features/action/onDisable", $this->$name);
+            do_action("newfold/features/action/onDisable", $this->name);
             // specific feature onDisable action
-            do_action("newfold/features/action/onDisable/{$this->$name}");
+            do_action("newfold/features/action/onDisable/{$this->name}");
 
-            $this->$options->set($this->$name, false);
+            $this->options->set($this->name, false);
         }
     }
 
@@ -98,11 +98,11 @@ abstract class Feature {
     public function isEnabled() {
         return apply_filters(
             // specific feature isEnabled filter
-            "newfold/features/filter/isEnabled/{$this->$name}",
+            "newfold/features/filter/isEnabled/{$this->name}",
             apply_filters(
                 // generic isEnabled filter
                 "newfold/features/filter/isEnabled",
-                $this->$options->get($this->$name)
+                $this->options->get($this->name)
             )
         );
     }
@@ -115,4 +115,12 @@ abstract class Feature {
     public function canToggleFeature() {
         return (bool) current_user_can( 'manage_options' );
     }
+
+    /**
+     * Get Name
+     */
+    public function getName() {
+        return $this->name;
+    }
+
 }
