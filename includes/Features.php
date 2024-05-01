@@ -3,7 +3,7 @@ namespace NewfoldLabs\WP\Module\Features;
 
 use NewfoldLabs\WP\Module\Features\Registry;
 use NewfoldLabs\WP\Module\Features\Feature;
-use NewfoldLabs\WP\Module\Features\FeaturesApi;
+use NewfoldLabs\WP\Module\Features\FeaturesAPI;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -52,10 +52,26 @@ class Features {
             add_action(
                 'rest_api_init',
                 function () {
-                    $api_instance = new FeaturesApi();
+                    $api_instance = new FeaturesAPI();
                 }
             );
-            
+
+            // Add CLI commands
+            add_action(
+                'cli_init',
+                function() {
+                    \WP_CLI::add_command(
+                        'newfold features',
+                        'NewfoldLabs\WP\Module\Features\FeaturesCLI',
+                        array(
+                            'shortdesc' => 'Operations for Newfold Features.',
+                            'longdesc'  => 'Internal commands to handle features.' .
+                                            PHP_EOL . 'Subcommands: all, enable, disable, isEnabled.',
+                        )
+                    );
+                }
+            );
+
         }
 
         // Add default filter to make any feature null value return false
@@ -86,6 +102,10 @@ class Features {
     // Helper functions to access feature instances
     public static function getFeatures() {
         return self::$registry->all();
+    }
+
+    public static function getFeatureList() {
+        return self::$registry->keys();
     }
 
     public static function getFeature($name){

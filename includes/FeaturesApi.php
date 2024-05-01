@@ -7,7 +7,7 @@ namespace NewFoldLabs\WP\Module\Features;
 /**
  * Class FeaturesApi
  */
-class FeaturesApi extends \WP_REST_Controller {
+class FeaturesAPI extends \WP_REST_Controller {
 
 	/**
 	 * The namespace of this controller's route.

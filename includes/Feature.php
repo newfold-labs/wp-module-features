@@ -78,6 +78,8 @@ abstract class Feature {
 
     /**
      * Enables the feature.
+     * 
+     * @return Object { featureName: isEnabled }
      */
     public function enable() {
         if ( $this->canToggleFeature()) {
@@ -89,10 +91,16 @@ abstract class Feature {
             $this->value = true;
             $this->setOption();
         }
+
+        return json_encode( 
+            array( $this->name => $this->isEnabled() )
+        );
     }
 
     /**
      * Disables the feature.
+     * 
+     * @return Object { featureName: isEnabled }
      */
     public function disable() {
         if ( $this->canToggleFeature()) {
@@ -105,6 +113,10 @@ abstract class Feature {
             $this->value = false;
             $this->setOption();
         }
+        
+        return json_encode( 
+            array( $this->name => $this->isEnabled() )
+        );
     }
 
     /**

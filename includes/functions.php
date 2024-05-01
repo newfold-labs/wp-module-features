@@ -3,7 +3,7 @@ namespace NewfoldLabs\WP\Module\Features;
 
 use NewfoldLabs\WP\Module\Features\Features;
 
-// Instantiates Features singleton
+// Instantiate Features singleton
 $newfold_features = Features::getInstance();
 
 
