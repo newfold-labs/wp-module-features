@@ -13,7 +13,7 @@ class Registry {
      * Array of Features Instances
      * array ( $name => Instance )
      */
-    private $features;
+    private $features = [];
 
     /**
      * Options object
@@ -62,7 +62,11 @@ class Registry {
      * @return mixed|null The feature instance if found, null otherwise.
      */
     public function get($name) {
-        return $this->features[$name];
+        if ( $this->has( $name ) ) {
+            return $this->features[$name];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -72,6 +76,7 @@ class Registry {
      */
     public function remove($name) {
         unset( $this->features[ $name ] );
+        $this->options->delete($name);
     }
 
     /**
