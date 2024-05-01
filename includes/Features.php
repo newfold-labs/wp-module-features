@@ -3,6 +3,7 @@ namespace NewfoldLabs\WP\Module\Features;
 
 use NewfoldLabs\WP\Module\Features\Registry;
 use NewfoldLabs\WP\Module\Features\Feature;
+use NewfoldLabs\WP\Module\Features\FeaturesApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
@@ -29,14 +30,6 @@ class Features {
         // Create registry
         self::$registry = new Registry();
 
-        // add_action(
-		// 	'rest_api_init',
-		// 	function () {
-		// 		$instance = new FeaturesApi( $this->container );
-		// 		$instance->register_routes();
-		// 	}
-		// );
-
         if ( function_exists( 'add_action' ) ) {
 
             // Find and add all features to registry
@@ -54,6 +47,15 @@ class Features {
                 },
                 1
             );
+
+            // Register API endpoints
+            add_action(
+                'rest_api_init',
+                function () {
+                    $api_instance = new FeaturesApi();
+                }
+            );
+            
         }
 
         // Add default filter to make any feature null value return false
@@ -73,6 +75,7 @@ class Features {
         }
 
     }
+
     public static function getInstance() {
         if (self::$instance == null) {
             self::$instance = new Features();
