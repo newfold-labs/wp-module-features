@@ -1,4 +1,5 @@
 <?php
+
 namespace NewfoldLabs\WP\Module\Features;
 
 /**
@@ -27,15 +28,15 @@ class FeaturesCLI extends \WP_CLI_Command {
 				break;
 
 			case 'isEnabled':
-				$this->isEnabled($args[1]);
+				$this->isEnabled( $args[1] );
 				break;
 
 			case 'enable':
-				$this->enable($args[1]);
+				$this->enable( $args[1] );
 				break;
 
 			case 'disable':
-                $this->disable($args[1]);
+                $this->disable( $args[1] );
 				break;
 
 			default:
@@ -49,12 +50,12 @@ class FeaturesCLI extends \WP_CLI_Command {
             'status' => 'success',
             'message' => implode(",", $features)
         );
-        $this->render($response);
+        $this->render( $response );
     }
 
-    protected function isEnabled($name) {
-        $feature = Features::getInstance()->getFeature($name);
-        if ($feature) {
+    protected function isEnabled( $name ) {
+        $feature = Features::getInstance()->getFeature( $name );
+        if ( $feature ) {
             $response = array(
                 'status' => 'success',
                 'message' => $feature->isEnabled() ? 'true' : 'false'
@@ -65,12 +66,12 @@ class FeaturesCLI extends \WP_CLI_Command {
                 'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
             );
         }
-        $this->render($response);
+        $this->render( $response );
     }
 
-    protected function enable($name) {
-        $feature = Features::getInstance()->getFeature($name);
-        if ($feature) {
+    protected function enable( $name ) {
+        $feature = Features::getInstance()->getFeature( $name );
+        if ( $feature ) {
             $response = array(
                 'status' => 'success',
                 'message' => $feature->enable()
@@ -81,12 +82,12 @@ class FeaturesCLI extends \WP_CLI_Command {
                 'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
             );
         }
-        $this->render($response);
+        $this->render( $response );
     }
 
-    protected function disable($name) {
-        $feature = Features::getInstance()->getFeature($name);
-        if ($feature) {
+    protected function disable( $name ) {
+        $feature = Features::getInstance()->getFeature( $name );
+        if ( $feature ) {
             $response = array(
                 'status' => 'success',
                 'message' => $feature->disable()
@@ -97,7 +98,7 @@ class FeaturesCLI extends \WP_CLI_Command {
                 'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
             );
         }
-        $this->render($response);
+        $this->render( $response );
     }
 
 	/**
