@@ -46,7 +46,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 
 		register_rest_route(
 			$this->namespace,
-			'/feature/enable', 
+			'/feature/enable',
 			array(
 				'methods'             => \WP_REST_Server::EDITABLE,
 				'callback'            => array( $this, 'feature_enable' ),
@@ -59,7 +59,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 				),
 			)
 		);
-	
+
 		register_rest_route(
 			$this->namespace,
 			'/feature/disable',
@@ -75,7 +75,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 				),
 			)
 		);
-	
+
 		register_rest_route(
 			$this->namespace,
 			'/feature/isEnabled',
@@ -91,21 +91,19 @@ class FeaturesAPI extends \WP_REST_Controller {
 				),
 			)
 		);
-
 	}
 
 	/**
 	 * Callback to validate feature is string
 	 *
-	 * @param $param the parameter
-	 * @param $request the request
-	 * @param $key the key
+	 * @param string $param the parameter
+	 * @param WP_REST_Request $request the request
+	 * @param string $key the key
 	 * @return bool
 	 */
 	public function validateFeatureParam( $param, $request, $key ) {
 		return is_string( $param );
 	}
-
 
 	/**
 	 * Check permissions for routes.
@@ -125,7 +123,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 	public function features( WP_REST_Request $request ) {
 		return new \WP_REST_Response(
 			array(
-				'features' => $this->features->getFeatures()
+				'features' => $this->features->getFeatures(),
 			),
 			200
 		);
@@ -138,16 +136,15 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function feature_enable( WP_REST_Request $request ) {
-		$params = $request->get_json_params();
-		$name = $params['feature'] ?? '';
-
+		$params  = $request->get_json_params();
+		$name    = $params['feature'] ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$feature->enable();
 			return new \WP_REST_Response(
 				array(
-					'feature' => $name,
-					'isEnabled' => $feature->isEnabled()
+					'feature'   => $name,
+					'isEnabled' => $feature->isEnabled(),
 				),
 				200
 			);
@@ -167,16 +164,15 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function feature_disable( WP_REST_Request $request ) {
-		$params = $request->get_json_params();
-		$name = $params['feature'] ?? '';
-
+		$params  = $request->get_json_params();
+		$name    = $params['feature'] ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$feature->disable();
 			return new \WP_REST_Response(
 				array(
-					'feature' => $name,
-					'isEnabled' => $feature->isEnabled()
+					'feature'   => $name,
+					'isEnabled' => $feature->isEnabled(),
 				),
 				200
 			);
@@ -197,15 +193,14 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @return WP_REST_Response The response object.
 	 */
 	public function feature_is_enabled( WP_REST_Request $request ) {
-		$name = $request['feature'] ?? '';
-
+		$name    = $request['feature'] ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$isEnabled = $feature->isEnabled();
 			return new \WP_REST_Response(
 				array(
-					'feature' => $name,
-					'isEnabled' => $isEnabled
+					'feature'   => $name,
+					'isEnabled' => $isEnabled,
 				),
 				200
 			);

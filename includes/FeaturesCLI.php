@@ -170,9 +170,9 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 * 2. Provide $keys as two strings -- by default 'DETAIL' and 'VALUE' are used.
 	 * 3. Prints ASCII Table
 	 *
-	 * @param array  $data
-	 * @param array  $keys
-	 * @param string $type
+	 * @param array  $data the data
+	 * @param array  $keys the keys
+	 * @param string $type table type
 	 */
 	protected function table( $data, $keys = array( 'DETAIL', 'VALUE' ), $type = 'simple' ) {
 		if ( empty( $data ) ) {
@@ -209,6 +209,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 * Formatted Success message.
 	 *
 	 * @param string $message the message
+	 * @param bool $silent if the success should be silent
 	 */
 	protected function success( $message, $silent = false ) {
 		$pre_ = $silent ? '' : 'Success: ';
@@ -241,7 +242,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 * @param bool   $halt if the error should stop execution
 	 * @param int    $code error code
 	 *
-	 * @throws \WP_CLI\ExitException
+	 * @throws \WP_CLI\ExitException exception
 	 */
 	protected function error( $message, $silent = false, $halt = true, $code = 400 ) {
 		$pre_ = $silent ? '' : 'Error: ';
@@ -303,7 +304,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 * @param string $question the question
 	 * @param string $type level
 	 *
-	 * @throws \WP_CLI\ExitException
+	 * @throws \WP_CLI\ExitException exception
 	 */
 	protected function confirm( $question, $type = 'normal' ) {
 		switch ( $type ) {
