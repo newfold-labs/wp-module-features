@@ -2,9 +2,7 @@
 namespace NewfoldLabs\WP\Module\Features;
 
 use NewfoldLabs\WP\Module\Features\Registry;
-use NewfoldLabs\WP\Module\Features\Feature;
 use NewfoldLabs\WP\Module\Features\FeaturesAPI;
-use NewfoldLabs\WP\ModuleLoader\Container;
 
 /**
  * This class Features functionality.
@@ -23,8 +21,6 @@ class Features {
 
 	/**
 	 * Constructor.
-	 *
-	 * @param Container $container The module container.
 	 */
 	private function __construct() {
 		// Create registry
@@ -71,7 +67,6 @@ class Features {
 					);
 				}
 			);
-
 		}
 
 		// Add default filter to make any feature null value return false
@@ -89,9 +84,13 @@ class Features {
 				1
 			);
 		}
-
 	}
 
+	/**
+	 * Get instance for singleton Features
+	 * 
+	 * @return Features instance
+	 */
 	public static function getInstance() {
 		if (self::$instance == null) {
 			self::$instance = new Features();
@@ -99,16 +98,31 @@ class Features {
 		return self::$instance;
 	}
 
-	// Helper functions to access feature instances
+	/**
+	 * Get Features
+	 * 
+	 * @return Array list of features and enabled states (key:name value:enabled)
+	 */
 	public static function getFeatures() {
 		return self::$registry->all();
 	}
 
+	/**
+	 * Get feature list
+	 * 
+	 * @return Array list of features
+	 */
 	public static function getFeatureList() {
 		return self::$registry->keys();
 	}
 
-	public static function getFeature( $name ){
+	/**
+	 * Get Feature
+	 * 
+	 * @param $name  the name of the feature
+	 * @return Feature instance
+	 */
+	public static function getFeature( $name ) {
 		return self::$registry->get( $name );
 	}
 }

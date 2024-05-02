@@ -36,7 +36,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 				break;
 
 			case 'disable':
-                $this->disable( $args[1] );
+				$this->disable( $args[1] );
 				break;
 
 			default:
@@ -44,62 +44,62 @@ class FeaturesCLI extends \WP_CLI_Command {
 		}
 	}
 
-    protected function list() {
-        $features = Features::getInstance()->getFeatureList();
-        $response = array(
-            'status' => 'success',
-            'message' => implode(",", $features)
-        );
-        $this->render( $response );
-    }
+	protected function list() {
+		$features = Features::getInstance()->getFeatureList();
+		$response = array(
+			'status' => 'success',
+			'message' => implode(",", $features)
+		);
+		$this->render( $response );
+	}
 
-    protected function isEnabled( $name ) {
-        $feature = Features::getInstance()->getFeature( $name );
-        if ( $feature ) {
-            $response = array(
-                'status' => 'success',
-                'message' => $feature->isEnabled() ? 'true' : 'false'
-            );
-        } else {
-            $response = array(
-                'status' => 'error',
-                'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
-            );
-        }
-        $this->render( $response );
-    }
+	protected function isEnabled( $name ) {
+		$feature = Features::getInstance()->getFeature( $name );
+		if ( $feature ) {
+			$response = array(
+				'status' => 'success',
+				'message' => $feature->isEnabled() ? 'true' : 'false'
+			);
+		} else {
+			$response = array(
+				'status' => 'error',
+				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
+			);
+		}
+		$this->render( $response );
+	}
 
-    protected function enable( $name ) {
-        $feature = Features::getInstance()->getFeature( $name );
-        if ( $feature ) {
-            $response = array(
-                'status' => 'success',
-                'message' => $feature->enable()
-            );
-        } else {
-            $response = array(
-                'status' => 'error',
-                'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
-            );
-        }
-        $this->render( $response );
-    }
+	protected function enable( $name ) {
+		$feature = Features::getInstance()->getFeature( $name );
+		if ( $feature ) {
+			$response = array(
+				'status' => 'success',
+				'message' => $feature->enable()
+			);
+		} else {
+			$response = array(
+				'status' => 'error',
+				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
+			);
+		}
+		$this->render( $response );
+	}
 
-    protected function disable( $name ) {
-        $feature = Features::getInstance()->getFeature( $name );
-        if ( $feature ) {
-            $response = array(
-                'status' => 'success',
-                'message' => $feature->disable()
-            );
-        } else {
-            $response = array(
-                'status' => 'error',
-                'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
-            );
-        }
-        $this->render( $response );
-    }
+	protected function disable( $name ) {
+		$feature = Features::getInstance()->getFeature( $name );
+		if ( $feature ) {
+			$response = array(
+				'status' => 'success',
+				'message' => $feature->disable()
+			);
+		} else {
+			$response = array(
+				'status' => 'error',
+				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
+			);
+		}
+		$this->render( $response );
+	}
 
 	/**
 	 * Render a success or error message based on provided data.
@@ -113,12 +113,12 @@ class FeaturesCLI extends \WP_CLI_Command {
 		);
 
 		switch ( gettype( $data ) ) {
-            case 'boolean':
-                $response = array(
-                    'status'  => 'success',
-                    'message' => __( 'Invalid JSON response', 'newfold-features-module' ),
-                );        
-                break;
+			case 'boolean':
+				$response = array(
+					'status'  => 'success',
+					'message' => __( 'Invalid JSON response', 'newfold-features-module' ),
+				);        
+				break;
 			case 'string':
 				$decoded = json_decode( $data );
 				if ( $decoded && isset( $decoded['message'] ) ) {
@@ -142,7 +142,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 		}
 	}
 
-    /**
+	/**
 	 * Helper to format data into tables.
 	 *
 	 * By default, the method creates simple $key => $value tables.

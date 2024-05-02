@@ -15,6 +15,8 @@ abstract class Feature {
 
 	/**
 	 * Registry object
+	 * 
+	 * @var Options
 	 */
 	private $options;
 
@@ -34,8 +36,10 @@ abstract class Feature {
 
 	/**
 	 * Constructor
+	 *
+	 * @param $options Options The associated Options for saving to database
 	 */
-	final function __construct( $options ) {
+	final protected function __construct( $options ) {
 		// assign options
 		$this->options = $options;
 
@@ -53,21 +57,21 @@ abstract class Feature {
 
 	/**
 	 * Init
-	 * 
+	 *
 	 * Add this in the child feature class.
 	 */
 	protected function initialize() {
 		// do initilization stuff
 		// does nothing here in the base class
 	}
-	
+
 	/**
 	 * Set options
 	 */
 	private function setOption() {
 		$this->options->set( $this->name, $this->value );
 	}
-	
+
 	/**
 	 * Set options
 	 */
@@ -77,42 +81,42 @@ abstract class Feature {
 
 	/**
 	 * Enables the feature.
-	 * 
+	 *
 	 * @return Object { featureName: isEnabled }
 	 */
 	public function enable() {
 		if ( $this->canToggleFeature() ) {
 			// generic feature onEnable action
-			do_action( "newfold/features/action/onEnable", $this->name );
+			do_action( 'newfold/features/action/onEnable', $this->name );
 			// specific feature onEnable action
-			do_action( "newfold/features/action/onEnable/{$this->name}" );
+			do_action( "newfold/features/action/onEnable:{$this->name}" );
 
 			$this->value = true;
 			$this->setOption();
 		}
 
-		return json_encode( 
+		return wp_json_encode( 
 			array( $this->name => $this->isEnabled() )
 		);
 	}
 
 	/**
 	 * Disables the feature.
-	 * 
+	 *
 	 * @return Object { featureName: isEnabled }
 	 */
 	public function disable() {
 		if ( $this->canToggleFeature() ) {
 
 			// generic feature onDisable action
-			do_action( "newfold/features/action/onDisable", $this->name );
+			do_action( 'newfold/features/action/onDisable', $this->name );
 			// specific feature onDisable action
-			do_action( "newfold/features/action/onDisable/{$this->name}" );
+			do_action( "newfold/features/action/onDisable:{$this->name}" );
 
 			$this->value = false;
 			$this->setOption();
 		}
-		
+
 		return json_encode( 
 			array( $this->name => $this->isEnabled() )
 		);
@@ -126,10 +130,10 @@ abstract class Feature {
 	public function isEnabled() {
 		return apply_filters(
 			// specific feature isEnabled filter
-			"newfold/features/filter/isEnabled/{$this->name}",
+			"newfold/features/filter/isEnabled:{$this->name}",
 			apply_filters(
 				// generic isEnabled filter
-				"newfold/features/filter/isEnabled",
+				'newfold/features/filter/isEnabled',
 				$this->getOption()
 			)
 		);

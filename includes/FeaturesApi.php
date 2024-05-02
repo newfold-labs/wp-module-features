@@ -119,8 +119,13 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
-	function features( \WP_REST_Request $request ) {
-		return new \WP_REST_Response( ['features' => $this->features->getFeatures() ], 200 );
+	function features( WP_REST_Request $request ) {
+		return new \WP_REST_Response(
+			array(
+				'features' => $this->features->getFeatures()
+			),
+			200
+		);
 	}
 
 	/**
@@ -129,16 +134,26 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
-	function feature_enable( \WP_REST_Request $request ) {
+	function feature_enable( WP_REST_Request $request ) {
 		$params = $request->get_json_params();
 		$name = $params['feature'] ?? '';
 
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$feature->enable();
-			return new \WP_REST_Response( ['feature' => $name, 'isEnabled' => $feature->isEnabled()], 200 );
+			return new \WP_REST_Response(
+				array(
+					'feature' => $name,
+					'isEnabled' => $feature->isEnabled()
+				),
+				200
+			);
 		} else {
-			return new \WP_Error( 'nfd_features_error', 'Failed to enable the feature.', ['status' => 500] );
+			return new \WP_Error(
+				'nfd_features_error',
+				'Failed to enable the feature.',
+				array( 'status' => 500 )
+			);
 		}
 	}
 
@@ -148,16 +163,26 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
-	function feature_disable( \WP_REST_Request $request ) {
+	function feature_disable( WP_REST_Request $request ) {
 		$params = $request->get_json_params();
 		$name = $params['feature'] ?? '';
 
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$feature->disable();
-			return new \WP_REST_Response( ['feature' => $name, 'isEnabled' => $feature->isEnabled()], 200 );
+			return new \WP_REST_Response(
+				array(
+					'feature' => $name,
+					'isEnabled' => $feature->isEnabled()
+				),
+				200
+			);
 		} else {
-			return new \WP_Error( 'nfd_features_error', 'Failed to disable the feature.', ['status' => 500] );
+			return new \WP_Error(
+				'nfd_features_error',
+				'Failed to disable the feature.',
+				array( 'status' => 500 )
+			);
 		}
 	}
 
@@ -168,16 +193,25 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response The response object.
 	 */
-	function feature_is_enabled( \WP_REST_Request $request ) {
+	function feature_is_enabled( WP_REST_Request $request ) {
 		$name = $request['feature'] ?? '';
 
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$isEnabled = $feature->isEnabled();
-			return new \WP_REST_Response( ['feature' => $name, 'isEnabled' => $isEnabled], 200 );
+			return new \WP_REST_Response(
+				array(
+					'feature' => $name,
+					'isEnabled' => $isEnabled
+				),
+				200
+			);
 		} else {
-			return new \WP_Error( 'nfd_features_error', 'Failed to check if feature isEnabled.', ['status' => 500] );
+			return new \WP_Error(
+				'nfd_features_error',
+				'Failed to check if feature isEnabled.',
+				array( 'status' => 500 )
+			);
 		}
 	}
-
 }
