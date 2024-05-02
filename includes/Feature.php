@@ -39,7 +39,7 @@ abstract class Feature {
 	 *
 	 * @param $options Options The associated Options for saving to database
 	 */
-	final protected function __construct( $options ) {
+	final public function __construct( $options ) {
 		// assign options
 		$this->options = $options;
 
