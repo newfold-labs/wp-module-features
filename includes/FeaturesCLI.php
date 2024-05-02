@@ -209,7 +209,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 * Formatted Success message.
 	 *
 	 * @param string $message the message
-	 * @param bool $silent if the success should be silent
+	 * @param bool   $silent if the success should be silent
 	 */
 	protected function success( $message, $silent = false ) {
 		$pre_ = $silent ? '' : 'Success: ';
@@ -242,7 +242,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 * @param bool   $halt if the error should stop execution
 	 * @param int    $code error code
 	 *
-	 * @throws \WP_CLI\ExitException exception
+	 * @throws \WP_CLI\ExitException Exception.
 	 */
 	protected function error( $message, $silent = false, $halt = true, $code = 400 ) {
 		$pre_ = $silent ? '' : 'Error: ';
@@ -304,7 +304,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 * @param string $question the question
 	 * @param string $type level
 	 *
-	 * @throws \WP_CLI\ExitException exception
+	 * @throws \WP_CLI\ExitException Exception.
 	 */
 	protected function confirm( $question, $type = 'normal' ) {
 		switch ( $type ) {

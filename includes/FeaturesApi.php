@@ -96,9 +96,9 @@ class FeaturesAPI extends \WP_REST_Controller {
 	/**
 	 * Callback to validate feature is string
 	 *
-	 * @param string $param the parameter
+	 * @param string          $param the parameter
 	 * @param WP_REST_Request $request the request
-	 * @param string $key the key
+	 * @param string          $key the key
 	 * @return bool
 	 */
 	public function validateFeatureParam( $param, $request, $key ) {
