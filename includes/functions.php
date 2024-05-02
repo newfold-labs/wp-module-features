@@ -20,7 +20,7 @@ function getFeatures() {
 /**
  * Helper function to get an instance of a feature by name
  *
- * @param $name - the feature name
+ * @param string $name - the feature name
  * @return Feature instance
  */
 function getFeature( $name ) {
@@ -31,7 +31,7 @@ function getFeature( $name ) {
 /**
  * Helper function to check if a feature is enabled by name
  *
- * @param $name - the feature name
+ * @param string $name - the feature name
  * @return bool indicating if the feature is enabled
  */
 function isEnabled( $name ) {

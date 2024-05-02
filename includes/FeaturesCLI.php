@@ -44,57 +44,75 @@ class FeaturesCLI extends \WP_CLI_Command {
 		}
 	}
 
+	/**
+	 * List command - lists features
+	 */
 	protected function list() {
 		$features = Features::getInstance()->getFeatureList();
 		$response = array(
-			'status' => 'success',
-			'message' => implode(",", $features)
+			'status'  => 'success',
+			'message' => implode( ',', $features ),
 		);
 		$this->render( $response );
 	}
 
+	/**
+	 * Is Enabled command - checks if feature is enabled
+	 *
+	 * @param string $name the feature name.
+	 */
 	protected function isEnabled( $name ) {
 		$feature = Features::getInstance()->getFeature( $name );
 		if ( $feature ) {
 			$response = array(
-				'status' => 'success',
-				'message' => $feature->isEnabled() ? 'true' : 'false'
+				'status'  => 'success',
+				'message' => $feature->isEnabled() ? 'true' : 'false',
 			);
 		} else {
 			$response = array(
-				'status' => 'error',
+				'status'  => 'error',
 				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
 			);
 		}
 		$this->render( $response );
 	}
 
+	/**
+	 * Enable command - enables a feature
+	 *
+	 * @param string $name the feature name.
+	 */
 	protected function enable( $name ) {
 		$feature = Features::getInstance()->getFeature( $name );
 		if ( $feature ) {
 			$response = array(
-				'status' => 'success',
-				'message' => $feature->enable()
+				'status'  => 'success',
+				'message' => $feature->enable(),
 			);
 		} else {
 			$response = array(
-				'status' => 'error',
+				'status'  => 'error',
 				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
 			);
 		}
 		$this->render( $response );
 	}
 
+	/**
+	 * Disable command - disables a feature
+	 *
+	 * @param string $name the feature name.
+	 */
 	protected function disable( $name ) {
 		$feature = Features::getInstance()->getFeature( $name );
 		if ( $feature ) {
 			$response = array(
-				'status' => 'success',
-				'message' => $feature->disable()
+				'status'  => 'success',
+				'message' => $feature->disable(),
 			);
 		} else {
 			$response = array(
-				'status' => 'error',
+				'status'  => 'error',
 				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
 			);
 		}
@@ -117,7 +135,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 				$response = array(
 					'status'  => 'success',
 					'message' => __( 'Invalid JSON response', 'newfold-features-module' ),
-				);        
+				);
 				break;
 			case 'string':
 				$decoded = json_decode( $data );
@@ -180,8 +198,8 @@ class FeaturesCLI extends \WP_CLI_Command {
 	/**
 	 * Creates Heading with Blue background and Grey text.
 	 *
-	 * @param string $message
-	 * @param string $emoji
+	 * @param string $message the message
+	 * @param string $emoji optional emoji
 	 */
 	protected function bold_heading( $message, $emoji = '' ) {
 		$this->colorize_log( $message, '4', 'W', $emoji );
@@ -190,7 +208,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	/**
 	 * Formatted Success message.
 	 *
-	 * @param string $message
+	 * @param string $message the message
 	 */
 	protected function success( $message, $silent = false ) {
 		$pre_ = $silent ? '' : 'Success: ';
@@ -200,7 +218,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	/**
 	 * Formatted Info message.
 	 *
-	 * @param string $message
+	 * @param string $message the message
 	 */
 	protected function info( $message ) {
 		$this->colorize_log( $message, '4', 'W', 'ℹ️' );
@@ -209,7 +227,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	/**
 	 * Formatted Warning message.
 	 *
-	 * @param string $message
+	 * @param string $message the message
 	 */
 	protected function warning( $message ) {
 		$this->colorize_log( $message, '3', 'k', '⚠️' );
@@ -218,10 +236,10 @@ class FeaturesCLI extends \WP_CLI_Command {
 	/**
 	 * Formatted Error message. Halts by default.
 	 *
-	 * @param string $message
-	 * @param bool   $silent
-	 * @param bool   $halt
-	 * @param int    $code
+	 * @param string $message the message
+	 * @param bool   $silent if the error should be silent
+	 * @param bool   $halt if the error should stop execution
+	 * @param int    $code error code
 	 *
 	 * @throws \WP_CLI\ExitException
 	 */
@@ -236,10 +254,10 @@ class FeaturesCLI extends \WP_CLI_Command {
 	/**
 	 * Formatting helper for colorized messages.
 	 *
-	 * @param string $message
-	 * @param string $background
-	 * @param string $text_color
-	 * @param string $emoji_prefix
+	 * @param string $message the message
+	 * @param string $background background color
+	 * @param string $text_color text color
+	 * @param string $emoji_prefix emojoi prefix
 	 */
 	protected function colorize_log( $message = '', $background = '', $text_color = '%_', $emoji_prefix = '' ) {
 		if ( ! empty( $background ) ) {
@@ -271,7 +289,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	 */
 	protected function log_to_json( $data ) {
 		if ( is_array( $data ) ) {
-			\WP_CLI::log( json_encode( $data ) );
+			\WP_CLI::log( wp_json_encode( $data ) );
 		} elseif ( is_array( json_decode( $data, true ) ) ) {
 			\WP_CLI::log( $data );
 		} else {
@@ -282,8 +300,8 @@ class FeaturesCLI extends \WP_CLI_Command {
 	/**
 	 * Formatted Confirm Dialog. A 'n' response breaks the thread.
 	 *
-	 * @param string $question
-	 * @param string $type
+	 * @param string $question the question
+	 * @param string $type level
 	 *
 	 * @throws \WP_CLI\ExitException
 	 */

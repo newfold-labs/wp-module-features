@@ -11,7 +11,7 @@ class Registry {
 
 	/**
 	 * Array of Features Instances
-	 * 
+	 *
 	 * @var Array ( $name => Instance )
 	 */
 	private $features = array();
@@ -21,15 +21,15 @@ class Registry {
 	 * See https://github.com/wp-forge/wp-options
 	 * Key value pairs for feature name and enabled boolean
 	 * This is saved to options table in database
-	 * 
+	 *
 	 * @var Options
 	 */
 	private $options;
 
 	/**
 	 * Constructor
-	 * 
-	 * @param $option_name the name for the option
+	 *
+	 * @param string $option_name the name for the option
 	 */
 	public function __construct( $option_name = 'newfold_features' ) {
 		$this->options = new Options( $option_name );
@@ -48,10 +48,10 @@ class Registry {
 	/**
 	 * Registers a feature with the registry.
 	 *
-	 * @param mixed $class The feature instance.
+	 * @param mixed $theclass The feature class.
 	 */
-	public function set( $class ) {
-		$instance = new $class( $this->options );
+	public function set( $theclass ) {
+		$instance = new $theclass( $this->options );
 		$name     = $instance->getName();
 		// check if feature already registered
 		// if ( ! $this->has( $name ) ) {

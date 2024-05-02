@@ -36,10 +36,10 @@ class FeaturesAPI extends \WP_REST_Controller {
 
 		register_rest_route(
 			$this->namespace,
-			'/features', 
+			'/features',
 			array(
-				'methods' => \WP_REST_Server::READABLE,
-				'callback' => array( $this, 'features' ),
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'features' ),
 				'permission_callback' => array( $this, 'checkPermission' ),
 			)
 		);
@@ -48,13 +48,13 @@ class FeaturesAPI extends \WP_REST_Controller {
 			$this->namespace,
 			'/feature/enable', 
 			array(
-				'methods' => \WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'feature_enable' ),
+				'methods'             => \WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'feature_enable' ),
 				'permission_callback' => array( $this, 'checkPermission' ),
-				'args' => array(
+				'args'                => array(
 					'feature' => array(
-						'required' => true,
-						'validate_callback' => array( $this, 'validateFeatureParam' )
+						'required'          => true,
+						'validate_callback' => array( $this, 'validateFeatureParam' ),
 					),
 				),
 			)
@@ -64,13 +64,13 @@ class FeaturesAPI extends \WP_REST_Controller {
 			$this->namespace,
 			'/feature/disable',
 			array(
-				'methods' => \WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'feature_disable' ),
+				'methods'             => \WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'feature_disable' ),
 				'permission_callback' => array( $this, 'checkPermission' ),
-				'args' => array(
+				'args'                => array(
 					'feature' => array(
-						'required' => true,
-						'validate_callback' => array( $this, 'validateFeatureParam' )
+						'required'          => true,
+						'validate_callback' => array( $this, 'validateFeatureParam' ),
 					),
 				),
 			)
@@ -80,13 +80,13 @@ class FeaturesAPI extends \WP_REST_Controller {
 			$this->namespace,
 			'/feature/isEnabled',
 			array(
-				'methods' => \WP_REST_Server::READABLE,
-				'callback' => array( $this, 'feature_is_enabled' ),
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'feature_is_enabled' ),
 				'permission_callback' => array( $this, 'checkPermission' ),
-				'args' => array(
+				'args'                => array(
 					'feature' => array(
-						'required' => true,
-						'validate_callback' => array( $this, 'validateFeatureParam' )
+						'required'          => true,
+						'validate_callback' => array( $this, 'validateFeatureParam' ),
 					),
 				),
 			)
@@ -95,8 +95,11 @@ class FeaturesAPI extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Validate feature callback as string
-	 * 
+	 * Callback to validate feature is string
+	 *
+	 * @param $param the parameter
+	 * @param $request the request
+	 * @param $key the key
 	 * @return bool
 	 */
 	public function validateFeatureParam( $param, $request, $key ) {
@@ -119,7 +122,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
-	function features( WP_REST_Request $request ) {
+	public function features( WP_REST_Request $request ) {
 		return new \WP_REST_Response(
 			array(
 				'features' => $this->features->getFeatures()
@@ -134,7 +137,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
-	function feature_enable( WP_REST_Request $request ) {
+	public function feature_enable( WP_REST_Request $request ) {
 		$params = $request->get_json_params();
 		$name = $params['feature'] ?? '';
 
@@ -163,7 +166,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
-	function feature_disable( WP_REST_Request $request ) {
+	public function feature_disable( WP_REST_Request $request ) {
 		$params = $request->get_json_params();
 		$name = $params['feature'] ?? '';
 
@@ -193,7 +196,7 @@ class FeaturesAPI extends \WP_REST_Controller {
 	 * @param WP_REST_Request $request The request object.
 	 * @return WP_REST_Response The response object.
 	 */
-	function feature_is_enabled( WP_REST_Request $request ) {
+	public function feature_is_enabled( WP_REST_Request $request ) {
 		$name = $request['feature'] ?? '';
 
 		$feature = $this->features->getFeature( $name );
