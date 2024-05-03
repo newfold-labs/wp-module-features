@@ -11,11 +11,15 @@ class Features {
 
 	/**
 	 * Singleton instance
+	 *
+	 * @var Features
 	 */
 	private static $instance = null;
 
 	/**
 	 * Registry
+	 *
+	 * @var Registry
 	 */
 	private static $registry = null;
 
@@ -34,7 +38,7 @@ class Features {
 				function () {
 					// Find extended instances of the Feature class and add to the Registry
 					foreach ( get_declared_classes() as $class ) {
-						if( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
+						if ( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
 							// error_log( 'NewfoldLabs\WP\Module\Features child class found: '.$class );
 							// add class to registry and instantiate
 							self::$registry->set( $class );
@@ -55,7 +59,7 @@ class Features {
 			// Add CLI commands
 			add_action(
 				'cli_init',
-				function() {
+				function () {
 					\WP_CLI::add_command(
 						'newfold features',
 						'NewfoldLabs\WP\Module\Features\FeaturesCLI',
@@ -75,7 +79,7 @@ class Features {
 				'newfold/features/filter/isEnabled',
 				function ( $value ) {
 					// if feature state is null, return false
-					if ( !isset( $value ) ) {
+					if ( ! isset( $value ) ) {
 						$value = false;
 					}
 					return $value;
@@ -88,11 +92,11 @@ class Features {
 
 	/**
 	 * Get instance for singleton Features
-	 * 
+	 *
 	 * @return Features instance
 	 */
 	public static function getInstance() {
-		if (self::$instance == null) {
+		if ( null === self::$instance ) {
 			self::$instance = new Features();
 		}
 		return self::$instance;
@@ -100,7 +104,7 @@ class Features {
 
 	/**
 	 * Get Features
-	 * 
+	 *
 	 * @return Array list of features and enabled states (key:name value:enabled)
 	 */
 	public static function getFeatures() {
@@ -109,7 +113,7 @@ class Features {
 
 	/**
 	 * Get feature list
-	 * 
+	 *
 	 * @return Array list of features
 	 */
 	public static function getFeatureList() {
@@ -118,8 +122,8 @@ class Features {
 
 	/**
 	 * Get Feature
-	 * 
-	 * @param $name  the name of the feature
+	 *
+	 * @param string $name the name of the feature
 	 * @return Feature instance
 	 */
 	public static function getFeature( $name ) {

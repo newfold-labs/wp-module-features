@@ -15,7 +15,7 @@ abstract class Feature {
 
 	/**
 	 * Registry object
-	 * 
+	 *
 	 * @var Options
 	 */
 	private $options;
@@ -37,7 +37,7 @@ abstract class Feature {
 	/**
 	 * Constructor
 	 *
-	 * @param $options Options The associated Options for saving to database
+	 * @param Options $options The associated Options for saving to database
 	 */
 	final public function __construct( $options ) {
 		// assign options
@@ -49,10 +49,9 @@ abstract class Feature {
 		// only initialize if enabled
 		if ( $this->isEnabled() ) {
 			$this->initialize();
-		} else {
-			// not initialized or loaded
-			// does nothing
 		}
+		// else not initialized or loaded
+		// does nothing
 	}
 
 	/**
@@ -95,7 +94,7 @@ abstract class Feature {
 			$this->setOption();
 		}
 
-		return wp_json_encode( 
+		return wp_json_encode(
 			array( $this->name => $this->isEnabled() )
 		);
 	}
@@ -117,7 +116,7 @@ abstract class Feature {
 			$this->setOption();
 		}
 
-		return json_encode( 
+		return wp_json_encode(
 			array( $this->name => $this->isEnabled() )
 		);
 	}
@@ -154,5 +153,4 @@ abstract class Feature {
 	public function getName() {
 		return $this->name;
 	}
-
 }
