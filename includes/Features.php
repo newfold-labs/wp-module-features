@@ -4,6 +4,8 @@ namespace NewfoldLabs\WP\Module\Features;
 use NewfoldLabs\WP\Module\Features\Registry;
 use NewfoldLabs\WP\Module\Features\FeaturesAPI;
 
+use function NewfoldLabs\WP\ModuleLoader\container;
+
 /**
  * This class Features functionality.
  **/
@@ -68,6 +70,21 @@ class Features {
 							'longdesc'  => 'Internal commands to handle features.' .
 											PHP_EOL . 'Subcommands: all, enable, disable, isEnabled.',
 						)
+					);
+				}
+			);
+
+			// register API script
+			add_action(
+				'admin_enqueue_scripts',
+				function () {
+					$assetsDir = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features/static/js/';
+					wp_enqueue_script(
+						'newfold-features',
+						$assetsDir . 'features.js',
+						array( 'wp-api-fetch' ),
+						container()->plugin()->version,
+						true
 					);
 				}
 			);
