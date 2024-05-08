@@ -117,7 +117,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return bool
 	 */
 	public function checkPermission() {
-		return true; //(bool) current_user_can( 'manage_options' );
+		return (bool) current_user_can( 'manage_options' );
 	}
 
 	/**
@@ -142,8 +142,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function feature_enable( WP_REST_Request $request ) {
-		$params  = $request->get_json_params();
-		$name    = $params['feature'] ?? '';
+		$name    = $request->get_param('feature') ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$feature->enable();
@@ -170,8 +169,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function feature_disable( WP_REST_Request $request ) {
-		$params  = $request->get_json_params();
-		$name    = $params['feature'] ?? '';
+		$name    = $request->get_param('feature') ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$feature->disable();

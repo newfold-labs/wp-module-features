@@ -1,12 +1,13 @@
 {
 	const API_ENDPOINT = window.NewfoldRuntime.restUrl + 'newfold-features/v1';
+	const OBJECT_NAME = 'NewfoldFeatures';
 
 	const attachToDOM = () => {
-		window.Features = buildFeaturesObject();
+		window[ OBJECT_NAME ] = createFeaturesObject();
 		updateFeatures();
 	};
 
-	const buildFeaturesObject = () => {
+	const createFeaturesObject = () => {
 		return {
 			updateFeatures,
 			isEnabled,
@@ -16,7 +17,7 @@
 	};
 
 	const updateFeatures = async () => {
-		const result = {};
+		let result = {};
 
 		await window.wp
 			.apiFetch( {
@@ -25,66 +26,62 @@
 			} )
 			.then( ( response ) => {
 				if ( response.hasOwnProperty( 'features' ) ) {
-					result.success = true;
-					result.features = response.features;
-					window.Features.features = response.features;
+					result = response.features;
+					// save internally
+					window[ OBJECT_NAME ].features = result;
 				} else {
-					result.success = false;
-					result.features = null;
+					result = false;
 				}
 			} )
 			.catch( () => {
-				result.success = false;
-				result.features = null;
+				result = null;
 			} );
 
 		return result;
 	};
 
-	const isEnabled = async ( featureName ) => {
-		const result = {};
+	const updateFeature = ( featureName, isEnabled ) => {
+		window[ OBJECT_NAME ].features[ featureName ] = isEnabled;
+	};
 
+	const isEnabled = async ( featureName ) => {
 		if (
-			! window.hasOwnProperty( 'Features' ) ||
-			! window.Features.hasOwnProperty( 'features' ) ||
-			! window.Features.features.hasOwnProperty( featureName )
+			! window.hasOwnProperty( OBJECT_NAME ) ||
+			! window[ OBJECT_NAME ].hasOwnProperty( 'features' ) ||
+			! window[ OBJECT_NAME ].features.hasOwnProperty( featureName )
 		) {
 			return updateFeatures().then( () => {
 				return isEnabled( featureName );
 			} );
 		}
-
-		result.success = true;
-		result[ `${ featureName }` ] = window.Features.features[ `${ featureName }` ];
-		result.feature = {
-			feature: featureName,
-			isEnabled: window.Features.features[ `${ featureName }` ],
-		};
-
-		return result;
+		return window[ OBJECT_NAME ].features[ featureName ];
 	};
 
 	const enable = async ( featureName ) => {
 		const result = {};
+		if ( await isEnabled( featureName ) ) {
+			result.success = false;
+			result.message = `${ featureName } already enabled.`;
+			return result;
+		}
 
 		await window.wp
 			.apiFetch( {
 				url: `${ API_ENDPOINT }/feature/enable?feature=${ featureName }`,
 				method: 'POST',
-				data: {
-					feature: featureName,
-				},
 			} )
 			.then( ( response ) => {
 				if ( response.hasOwnProperty( 'feature' ) ) {
-					result.success = true;
-					window.Newfold.features[ `${ featureName }` ] = true;
+					result[ response.feature ] = response.isEnabled;
+					updateFeature( response.feature, response.isEnabled );
 				} else {
 					result.success = false;
+					result.message = 'There was an unexpected error.';
 				}
 			} )
-			.catch( () => {
+			.catch( ( error ) => {
 				result.success = false;
+				result.message = error.message;
 			} );
 
 		return result;
@@ -92,6 +89,11 @@
 
 	const disable = async ( featureName ) => {
 		const result = {};
+		if ( ! ( await isEnabled( featureName ) ) ) {
+			result.success = false;
+			result.message = `${ featureName } already disabled.`;
+			return result;
+		}
 
 		await window.wp
 			.apiFetch( {
@@ -99,15 +101,17 @@
 				method: 'POST',
 			} )
 			.then( ( response ) => {
-				if ( response.hasOwnProperty( 'comingSoon' ) ) {
-					result.success = true;
-					window.Newfold.features[ `${ featureName }` ] = false;
+				if ( response.hasOwnProperty( 'feature' ) ) {
+					result[ response.feature ] = response.isEnabled;
+					updateFeature( response.feature, response.isEnabled );
 				} else {
 					result.success = false;
+					result.message = 'There was an unexpected error.';
 				}
 			} )
-			.catch( () => {
+			.catch( ( error ) => {
 				result.success = false;
+				result.message = error.message;
 			} );
 
 		return result;
