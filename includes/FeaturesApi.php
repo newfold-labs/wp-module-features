@@ -145,7 +145,7 @@ class FeaturesAPI extends WP_REST_Controller {
 		$name    = $request->get_param('feature') ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
-			$feature->enable();
+			$result = json_decode( $feature->enable() );
 			return new WP_REST_Response(
 				array(
 					'feature'   => $name,
@@ -172,7 +172,7 @@ class FeaturesAPI extends WP_REST_Controller {
 		$name    = $request->get_param('feature') ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
-			$feature->disable();
+			$result = json_decode( $feature->disable() );
 			return new WP_REST_Response(
 				array(
 					'feature'   => $name,

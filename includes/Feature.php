@@ -43,6 +43,14 @@ abstract class Feature {
 		// assign options
 		$this->options = $options;
 
+		// check if state already saved to options
+		$savedAs = $this->getOption();
+
+		// Saved state overrides the default value 
+		if ( isset( $savedAs ) ) {
+			$this->value = $savedAs;
+		}
+
 		// set initial value
 		$this->setOption();
 
@@ -65,16 +73,16 @@ abstract class Feature {
 	}
 
 	/**
-	 * Set options
+	 * Set option
 	 */
 	private function setOption() {
 		$this->options->set( $this->name, $this->value );
 	}
 
 	/**
-	 * Set options
+	 * Get option
 	 */
-	private function getOption() {
+	public function getOption() {
 		return $this->options->get( $this->name );
 	}
 
@@ -106,7 +114,6 @@ abstract class Feature {
 	 */
 	public function disable() {
 		if ( $this->canToggleFeature() ) {
-
 			// generic feature onDisable action
 			do_action( 'newfold/features/action/onDisable', $this->name );
 			// specific feature onDisable action
