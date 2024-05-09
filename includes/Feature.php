@@ -46,7 +46,7 @@ abstract class Feature {
 		// check if state already saved to options
 		$savedAs = $this->getOption();
 
-		// Saved state overrides the default value 
+		// Saved state overrides the default value
 		if ( isset( $savedAs ) ) {
 			$this->value = $savedAs;
 		}

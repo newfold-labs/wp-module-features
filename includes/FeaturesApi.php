@@ -40,6 +40,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 */
 	public function register_routes() {
 
+		// Get all features endpoint
 		register_rest_route(
 			$this->namespace,
 			'/features',
@@ -50,6 +51,7 @@ class FeaturesAPI extends WP_REST_Controller {
 			)
 		);
 
+		// Register feature enable endpoint 
 		register_rest_route(
 			$this->namespace,
 			'/feature/enable',
@@ -66,6 +68,7 @@ class FeaturesAPI extends WP_REST_Controller {
 			)
 		);
 
+		// Register feature disable endpoint
 		register_rest_route(
 			$this->namespace,
 			'/feature/disable',
@@ -82,6 +85,7 @@ class FeaturesAPI extends WP_REST_Controller {
 			)
 		);
 
+		// Register feature is enabled check endpoint
 		register_rest_route(
 			$this->namespace,
 			'/feature/isEnabled',
@@ -142,7 +146,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function feature_enable( WP_REST_Request $request ) {
-		$name    = $request->get_param('feature') ?? '';
+		$name    = $request->get_param( 'feature' ) ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$result = json_decode( $feature->enable() );
@@ -169,7 +173,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function feature_disable( WP_REST_Request $request ) {
-		$name    = $request->get_param('feature') ?? '';
+		$name    = $request->get_param( 'feature' ) ?? '';
 		$feature = $this->features->getFeature( $name );
 		if ( $feature ) {
 			$result = json_decode( $feature->disable() );
