@@ -73,18 +73,29 @@ class Features {
 					);
 				}
 			);
-
-			// register API script
+			
+			// Register API script and localized values
 			add_action(
 				'admin_enqueue_scripts',
 				function () {
-					$assetsDir = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features/static/js/';
-					wp_enqueue_script(
+					// Register features API script
+					$scriptPath = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features/static/js/features.js';
+					wp_register_script(
 						'newfold-features',
-						$assetsDir . 'features.js',
-						array( 'wp-api-fetch' ),
+						$scriptPath,
+						array( 'wp-api-fetch', 'newfold-features-local' ),
 						container()->plugin()->version,
 						true
+					);
+					// Register Localized Script with initial feature values
+					wp_register_script( 'newfold-features-local', null, null, container()->plugin()->version, true );
+					wp_localize_script(
+						'newfold-features-local',
+						'NewfoldFeatures',
+						array(
+							'features' => getFeatures(),
+							'restUrl'  => esc_url_raw( rest_url() ) . 'newfold-features/v1',
+						)
 					);
 				}
 			);

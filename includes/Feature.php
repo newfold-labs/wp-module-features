@@ -14,7 +14,7 @@ use WP_Forge\Options\Options;
 abstract class Feature {
 
 	/**
-	 * Registry object
+	 * Options object
 	 *
 	 * @var Options
 	 */
@@ -44,7 +44,7 @@ abstract class Feature {
 		$this->options = $options;
 
 		// check if state already saved to options
-		$savedAs = $this->getOption();
+		$savedAs = $this->options->get( $this->name );
 
 		// Saved state overrides the default value
 		if ( isset( $savedAs ) ) {
@@ -52,14 +52,14 @@ abstract class Feature {
 		}
 
 		// set initial value
-		$this->setOption();
+		$this->setValue( $this->value );
 
 		// only initialize if enabled
 		if ( $this->isEnabled() ) {
 			$this->initialize();
 		}
-		// else not initialized or loaded
-		// does nothing
+
+		// else not initialized or loaded - does nothing
 	}
 
 	/**
@@ -68,28 +68,23 @@ abstract class Feature {
 	 * Add this in the child feature class.
 	 */
 	protected function initialize() {
-		// do initilization stuff
-		// does nothing here in the base class
+		// do initialization stuff - nothing here but in the child class
 	}
 
 	/**
-	 * Set option
+	 * Set Value - this updates the value as well as the option
+	 * 
+	 * @param boolean $value The value to set.
 	 */
-	private function setOption() {
-		$this->options->set( $this->name, $this->value );
-	}
-
-	/**
-	 * Get option
-	 */
-	public function getOption() {
-		return $this->options->get( $this->name );
+	private function setValue( $value ) {
+		$this->value = $value;
+		$this->options->set( $this->name, $value );
 	}
 
 	/**
 	 * Enables the feature.
 	 *
-	 * @return Object { featureName: isEnabled }
+	 * @return boolean True if successful, false otherwise
 	 */
 	public function enable() {
 		if ( $this->canToggleFeature() ) {
@@ -98,19 +93,18 @@ abstract class Feature {
 			// specific feature onEnable action
 			do_action( "newfold/features/action/onEnable:{$this->name}" );
 
-			$this->value = true;
-			$this->setOption();
+			$this->setValue( true);
+
+			return true;
 		}
 
-		return wp_json_encode(
-			array( $this->name => $this->isEnabled() )
-		);
+		return false;
 	}
 
 	/**
 	 * Disables the feature.
 	 *
-	 * @return Object { featureName: isEnabled }
+	 * @return boolean True if successful, false otherwise
 	 */
 	public function disable() {
 		if ( $this->canToggleFeature() ) {
@@ -119,13 +113,12 @@ abstract class Feature {
 			// specific feature onDisable action
 			do_action( "newfold/features/action/onDisable:{$this->name}" );
 
-			$this->value = false;
-			$this->setOption();
+			$this->setValue( false );
+
+			return true;
 		}
 
-		return wp_json_encode(
-			array( $this->name => $this->isEnabled() )
-		);
+		return false;
 	}
 
 	/**
@@ -140,7 +133,7 @@ abstract class Feature {
 			apply_filters(
 				// generic isEnabled filter
 				'newfold/features/filter/isEnabled',
-				$this->getOption()
+				$this->value
 			)
 		);
 	}

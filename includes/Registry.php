@@ -31,8 +31,8 @@ class Registry {
 	 *
 	 * @param string $option_name the name for the option
 	 */
-	public function __construct( $option_name = 'newfold_features' ) {
-		$this->options = new Options( $option_name );
+	public function __construct() {
+		$this->options = new Options( 'newfold_features' );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Registry {
 	/**
 	 * Registers a feature with the registry.
 	 *
-	 * @param mixed $theclass The feature class.
+	 * @param string $theclass The feature class.
 	 */
 	public function set( $theclass ) {
 		$instance = new $theclass( $this->options );
