@@ -51,7 +51,7 @@ class FeaturesAPI extends WP_REST_Controller {
 			)
 		);
 
-		// Register feature enable endpoint 
+		// Register feature enable endpoint
 		register_rest_route(
 			$this->namespace,
 			'/feature/enable',
