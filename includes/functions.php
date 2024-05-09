@@ -3,21 +3,9 @@ namespace NewfoldLabs\WP\Module\Features;
 
 use NewfoldLabs\WP\Module\Features\Features;
 
-// TODO this should be removed
 // Instantiate Features singleton
-$newfold_features = Features::getInstance();
+Features::getInstance();
 
-// TODO remove this method
-/**
- * Helper function to get all features with their enabled state
- *
- * @return Array of features
- */
-function getFeatures() {
-	return Features::getInstance()->getFeatures();
-}
-
-// TODO remove this method
 /**
  * Helper function to get an instance of a feature by name
  *
@@ -40,7 +28,7 @@ function isEnabled( $name ) {
 
 /**
  * Helper function to enable a feature by name
- * 
+ *
  * @param string $name - the feature name
  * @return bool indicating if the feature was enabled
  */
@@ -50,7 +38,7 @@ function enable( $name ) {
 
 /**
  * Helper function to disable a feature by name
- * 
+ *
  * @param string $name - the feature name
  * @return bool indicating if the feature was disabled
  */

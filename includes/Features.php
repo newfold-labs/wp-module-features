@@ -29,6 +29,7 @@ class Features {
 	 * Constructor.
 	 */
 	private function __construct() {
+
 		// Create registry
 		self::$registry = new Registry();
 
@@ -38,13 +39,13 @@ class Features {
 			add_action( 'plugins_loaded', array( __CLASS__, 'findFeatures' ), 1 );
 
 			// Register API endpoints
-			add_action( 'rest_api_init', array( __CLASS__, 'registerRoutes' ));
+			add_action( 'rest_api_init', array( __CLASS__, 'registerRoutes' ) );
 
 			// Add CLI commands
 			add_action( 'cli_init', array( __CLASS__, 'registerCLI' ));
-			
+
 			// Register API script and localized values
-			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ));
+			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 
 		}
 
@@ -62,7 +63,7 @@ class Features {
 	/**
 	 * Find and add all feature classes to the registry
 	 */
-	public static function findFeatures () {
+	public static function findFeatures() {
 		// Find extended instances of the Feature class and add to the Registry
 		foreach ( get_declared_classes() as $class ) {
 			if ( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
@@ -76,14 +77,14 @@ class Features {
 	/**
 	 * Register routes
 	 */
-	public static function registerRoutes () {
+	public static function registerRoutes() {
 		$api_instance = new FeaturesAPI();
 	}
 
 	/**
 	 * Add CLI commands
 	 */
-	public static function registerCLI () {
+	public static function registerCLI() {
 		\WP_CLI::add_command(
 			'newfold features',
 			'NewfoldLabs\WP\Module\Features\FeaturesCLI',
@@ -98,7 +99,7 @@ class Features {
 	/**
 	 * Register API script and localized values
 	 */
-	public static function assets () {
+	public static function assets() {
 		// Register features API script
 		$scriptPath = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features/static/js/features.js';
 		wp_register_script(
@@ -114,22 +115,24 @@ class Features {
 			'newfold-features-local',
 			'NewfoldFeatures',
 			array(
-				'features' => getFeatures(),
+				'features' => self::getFeatures(),
 				'restUrl'  => esc_url_raw( rest_url() ) . 'newfold-features/v1',
 			)
 		);
 	}
 	/**
 	 * Add default filter to make any feature null value return false
+	 * 
+	 * @param boolean $value The value to set.
 	 */
-	public static function defaultIsEnabledFilter ( $value ) {
+	public static function defaultIsEnabledFilter( $value ) {
 		// if feature state is null, return false
 		if ( ! isset( $value ) ) {
 			$value = false;
 		}
 		return $value;
 	}
-	
+
 	/**
 	 * Get instance for singleton Features
 	 *

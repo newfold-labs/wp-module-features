@@ -195,7 +195,8 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response The response object.
 	 */
 	public function featureIsEnabled( WP_REST_Request $request ) {
-		$name    = $request['feature'];
+		$name = $request['feature'];
+
 		return new WP_REST_Response(
 			isEnabled( $name ),
 			200

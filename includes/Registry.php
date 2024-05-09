@@ -28,8 +28,6 @@ class Registry {
 
 	/**
 	 * Constructor
-	 *
-	 * @param string $option_name the name for the option
 	 */
 	public function __construct() {
 		$this->options = new Options( 'newfold_features' );

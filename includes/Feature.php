@@ -73,7 +73,7 @@ abstract class Feature {
 
 	/**
 	 * Set Value - this updates the value as well as the option
-	 * 
+	 *
 	 * @param boolean $value The value to set.
 	 */
 	private function setValue( $value ) {
@@ -93,7 +93,7 @@ abstract class Feature {
 			// specific feature onEnable action
 			do_action( "newfold/features/action/onEnable:{$this->name}" );
 
-			$this->setValue( true);
+			$this->setValue( true );
 
 			return true;
 		}
