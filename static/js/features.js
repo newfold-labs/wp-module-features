@@ -32,7 +32,6 @@
 				method: 'POST',
 			} )
 			.then( ( response ) => {
-				console.log(response);
 				if ( response === true ) {
 					updateFeature( name, true );
 					result.success = true;
@@ -69,7 +68,6 @@
 				method: 'POST',
 			} )
 			.then( ( response ) => {
-				// console.log(response);
 				if ( response === true ) {
 					updateFeature( name, false );
 					result.success = true;
@@ -90,10 +88,10 @@
 	/**
 	 * Update a feature in the object
 	 * @param {string}  name
-	 * @param {boolean} isEnabled
+	 * @param {boolean} value
 	 */
-	const updateFeature = ( name, isEnabled ) => {
-		window.NewfoldFeatures.features[ name ] = isEnabled;
+	const updateFeature = ( name, value ) => {
+		window.NewfoldFeatures.features[ name ] = value;
 	};
 
 	// Set up the localized features object with methods
