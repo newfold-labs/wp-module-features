@@ -42,7 +42,7 @@ class Features {
 			add_action( 'rest_api_init', array( __CLASS__, 'registerRoutes' ) );
 
 			// Add CLI commands
-			add_action( 'cli_init', array( __CLASS__, 'registerCLI' ));
+			add_action( 'cli_init', array( __CLASS__, 'registerCLI' ) );
 
 			// Register API script and localized values
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
@@ -122,7 +122,7 @@ class Features {
 	}
 	/**
 	 * Add default filter to make any feature null value return false
-	 * 
+	 *
 	 * @param boolean $value The value to set.
 	 */
 	public static function defaultIsEnabledFilter( $value ) {
