@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="Features-Module">
     <rule ref="Newfold"/>
-    <config name="testVersion" value="7.1-"/>
-    <config name="minimum_supported_wp_version" value="6.0"/>
+    <config name="testVersion" value="7.3-"/>
+    <config name="minimum_supported_wp_version" value="6.3"/>
     <rule ref="WordPress-Core">
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>

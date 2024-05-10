@@ -23,15 +23,18 @@
         }
     ],
     "require": {
-        "wp-forge/wp-options": "^1.1"
+        "wp-forge/wp-options": "^1.1.1"
     },
     "require-dev": {
-        "newfold-labs/wp-php-standards": "^1.2"
+        "newfold-labs/wp-php-standards": "^1.2.3"
     },
     "autoload": {
         "psr-4": {
             "NewfoldLabs\\WP\\Module\\Features\\": "includes"
-        }
+        },
+        "files": [
+            "includes/functions.php"
+        ]
     },
     "config": {
         "allow-plugins": {
