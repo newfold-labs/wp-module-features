@@ -78,7 +78,7 @@ class Features {
 	 * Register routes
 	 */
 	public static function registerRoutes() {
-		$api_instance = new FeaturesAPI();
+		new FeaturesAPI();
 	}
 
 	/**
@@ -100,19 +100,20 @@ class Features {
 	 * Register API script and localized values
 	 */
 	public static function assets() {
+
 		// Register features API script
 		$scriptPath = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features/static/js/features.js';
 		wp_register_script(
 			'newfold-features',
 			$scriptPath,
-			array( 'wp-api-fetch', 'newfold-features-local' ),
+			array( 'wp-api-fetch' ),
 			container()->plugin()->version,
 			true
 		);
-		// Register Localized Script with initial feature values
-		wp_register_script( 'newfold-features-local', null, null, container()->plugin()->version, true );
+
+		// Localized Script with initial feature values
 		wp_localize_script(
-			'newfold-features-local',
+			'newfold-features',
 			'NewfoldFeatures',
 			array(
 				'features' => self::getFeatures(),

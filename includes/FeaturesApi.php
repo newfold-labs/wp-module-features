@@ -152,9 +152,9 @@ class FeaturesAPI extends WP_REST_Controller {
 	 */
 	public function featureEnable( WP_REST_Request $request ) {
 		$name = $request->get_param( 'feature' );
-		if ( canToggle( $name ) ) {
+		if ( enable( $name ) ) {
 			return new WP_REST_Response(
-				enable( $name ),
+				true,
 				200
 			);
 		} else {
@@ -174,9 +174,9 @@ class FeaturesAPI extends WP_REST_Controller {
 	 */
 	public function featureDisable( WP_REST_Request $request ) {
 		$name = $request->get_param( 'feature' );
-		if ( canToggle( $name ) ) {
+		if ( disable( $name ) ) {
 			return new WP_REST_Response(
-				disable( $name ),
+				true,
 				200
 			);
 		} else {
@@ -195,10 +195,8 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response The response object.
 	 */
 	public function featureIsEnabled( WP_REST_Request $request ) {
-		$name = $request['feature'];
-
 		return new WP_REST_Response(
-			isEnabled( $name ),
+			isEnabled( $request['feature'] ),
 			200
 		);
 	}

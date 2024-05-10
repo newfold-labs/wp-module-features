@@ -46,15 +46,12 @@ class Registry {
 	/**
 	 * Registers a feature with the registry.
 	 *
-	 * @param string $theclass The feature class.
+	 * @param string $className The feature class name.
 	 */
-	public function set( $theclass ) {
-		$instance = new $theclass( $this->options );
-		$name     = $instance->getName();
-		// check if feature already registered
-		// if ( ! $this->has( $name ) ) {
-			$this->features[ $name ] = $instance;
-		// }
+	public function set( $className ) {
+		$instance                = new $className( $this->options );
+		$name                    = $instance->getName();
+		$this->features[ $name ] = $instance;
 	}
 
 	/**

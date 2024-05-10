@@ -40,19 +40,12 @@ abstract class Feature {
 	 * @param Options $options The associated Options for saving to database
 	 */
 	final public function __construct( $options ) {
+
 		// assign options
 		$this->options = $options;
 
 		// check if state already saved to options
-		$savedAs = $this->options->get( $this->name );
-
-		// Saved state overrides the default value
-		if ( isset( $savedAs ) ) {
-			$this->value = $savedAs;
-		}
-
-		// set initial value
-		$this->setValue( $this->value );
+		$this->setValue( $this->options->get( $this->name ) );
 
 		// only initialize if enabled
 		if ( $this->isEnabled() ) {
@@ -92,12 +85,9 @@ abstract class Feature {
 			do_action( 'newfold/features/action/onEnable', $this->name );
 			// specific feature onEnable action
 			do_action( "newfold/features/action/onEnable:{$this->name}" );
-
 			$this->setValue( true );
-
 			return true;
 		}
-
 		return false;
 	}
 
@@ -112,12 +102,9 @@ abstract class Feature {
 			do_action( 'newfold/features/action/onDisable', $this->name );
 			// specific feature onDisable action
 			do_action( "newfold/features/action/onDisable:{$this->name}" );
-
 			$this->setValue( false );
-
 			return true;
 		}
-
 		return false;
 	}
 
