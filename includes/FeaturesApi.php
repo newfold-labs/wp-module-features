@@ -10,7 +10,6 @@ use WP_Error;
 use function NewfoldLabs\WP\Module\Features\enable;
 use function NewfoldLabs\WP\Module\Features\disable;
 use function NewfoldLabs\WP\Module\Features\isEnabled;
-use function NewfoldLabs\WP\Module\Features\canToggle;
 
 /**
  * Class FeaturesAPI
@@ -154,7 +153,7 @@ class FeaturesAPI extends WP_REST_Controller {
 		$name = $request->get_param( 'feature' );
 		if ( enable( $name ) ) {
 			return new WP_REST_Response(
-				true,
+				isEnabled( $name ), // verifying enable was successful since actions could override
 				200
 			);
 		} else {
@@ -176,7 +175,7 @@ class FeaturesAPI extends WP_REST_Controller {
 		$name = $request->get_param( 'feature' );
 		if ( disable( $name ) ) {
 			return new WP_REST_Response(
-				true,
+				! isEnabled( $name ), // verifying enable was successful since actions could override
 				200
 			);
 		} else {
