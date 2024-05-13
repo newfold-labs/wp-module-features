@@ -56,7 +56,7 @@
 	 */
 	const disable = async ( name ) => {
 		const result = {};
-		if ( ! ( await isEnabled( name ) ) ) {
+		if ( false === ( await isEnabled( name ) ) ) {
 			result.success = false;
 			result.message = `'${ name }' is already disabled.`;
 			return result;

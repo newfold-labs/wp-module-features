@@ -151,12 +151,21 @@ class FeaturesAPI extends WP_REST_Controller {
 	 */
 	public function featureEnable( WP_REST_Request $request ) {
 		$name = $request->get_param( 'feature' );
-		if ( enable( $name ) ) {
+		$result = enable( $name );
+		
+		// error response received, typically feature not found.
+		if ( is_a( $result, 'WP_Error' ) ) { 
+			return $result;
+		}
+		// success
+		if ( $result ) {
 			return new WP_REST_Response(
 				isEnabled( $name ), // verifying enable was successful since actions could override
 				200
 			);
-		} else {
+		}
+		// other error, typically permissions
+		else {
 			return new WP_Error(
 				'nfd_features_error',
 				'Cannot modify this feature.',
@@ -173,12 +182,21 @@ class FeaturesAPI extends WP_REST_Controller {
 	 */
 	public function featureDisable( WP_REST_Request $request ) {
 		$name = $request->get_param( 'feature' );
-		if ( disable( $name ) ) {
+		$result = disable( $name );
+
+		// error response received, typically feature not found.
+		if ( is_a( $result, 'WP_Error' ) ) { 
+			return $result;
+		}
+		// success
+		if ( $result ) {
 			return new WP_REST_Response(
 				! isEnabled( $name ), // verifying enable was successful since actions could override
 				200
 			);
-		} else {
+		}
+		// other error, typically permissions
+		else {
 			return new WP_Error(
 				'nfd_features_error',
 				'Cannot modify this feature.',
@@ -194,6 +212,13 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response The response object.
 	 */
 	public function featureIsEnabled( WP_REST_Request $request ) {
+		$name = $request['feature'];
+		$result = isEnabled( $name );
+
+		// error response received, typically feature not found.
+		if ( is_a( $result, 'WP_Error' ) ) { 
+			return $result;
+		}
 		return new WP_REST_Response(
 			isEnabled( $request['feature'] ),
 			200

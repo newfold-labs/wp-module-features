@@ -36,7 +36,7 @@ class Features {
 		if ( function_exists( 'add_action' ) ) {
 
 			// Find and add all features to registry
-			add_action( 'plugins_loaded', array( __CLASS__, 'findFeatures' ), 1 );
+			add_action( 'plugins_loaded', array( __CLASS__, 'initFeatures' ), 1 );
 
 			// Register API endpoints
 			add_action( 'rest_api_init', array( __CLASS__, 'registerRoutes' ) );
@@ -63,7 +63,7 @@ class Features {
 	/**
 	 * Find and add all feature classes to the registry
 	 */
-	public static function findFeatures() {
+	public static function initFeatures() {
 		// Find extended instances of the Feature class and add to the Registry
 		foreach ( get_declared_classes() as $class ) {
 			if ( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
@@ -172,5 +172,15 @@ class Features {
 	 */
 	public static function getFeature( $name ) {
 		return self::$registry->get( $name );
+	}
+
+	/**
+	 * Has Feature
+	 *
+	 * @param string $name the name of the feature
+	 * @return boolean true if feature exists, false otherwise
+	 */
+	public static function hasFeature( $name ) {
+		return self::$registry->has( $name );
 	}
 }
