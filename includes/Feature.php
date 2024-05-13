@@ -79,7 +79,7 @@ abstract class Feature {
 	 *
 	 * @return boolean True if successful, false otherwise
 	 */
-	public function enable() {
+	final public function enable() {
 		if ( $this->canToggleFeature() ) {
 			// generic feature onEnable action
 			do_action( 'newfold/features/action/onEnable', $this->name );
@@ -96,7 +96,7 @@ abstract class Feature {
 	 *
 	 * @return boolean True if successful, false otherwise
 	 */
-	public function disable() {
+	final public function disable() {
 		if ( $this->canToggleFeature() ) {
 			// generic feature onDisable action
 			do_action( 'newfold/features/action/onDisable', $this->name );
@@ -113,7 +113,7 @@ abstract class Feature {
 	 *
 	 * @return bool True if the feature is enabled, false otherwise.
 	 */
-	public function isEnabled() {
+	final public function isEnabled() {
 		return apply_filters(
 			// specific feature isEnabled filter
 			"newfold/features/filter/isEnabled:{$this->name}",
