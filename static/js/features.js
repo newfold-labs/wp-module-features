@@ -38,7 +38,7 @@
 					result.message = `'${ name }' is now enabled`;
 				} else {
 					result.success = false;
-					result.message = 'There was an unexpected error.';
+					result.message = `'${ name }' could not be enabled`;
 				}
 			} )
 			.catch( ( error ) => {
@@ -74,7 +74,7 @@
 					result.message = `'${ name }' is now disabled`;
 				} else {
 					result.success = false;
-					result.message = 'There was an unexpected error.';
+					result.message = `'${ name }' could not be disabled`;
 				}
 			} )
 			.catch( ( error ) => {
