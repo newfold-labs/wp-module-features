@@ -107,7 +107,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	}
 
 	/**
-	 * Callback to validate feature is string
+	 * Callback to validate feature exists
 	 *
 	 * @param string          $param the parameter
 	 * @param WP_REST_Request $request the request
@@ -115,7 +115,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return bool
 	 */
 	public function validateFeatureParam( $param, $request, $key ) {
-		return is_string( $param );
+		return $this->features->hasFeature( $param );
 	}
 
 	/**
@@ -152,11 +152,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	public function featureEnable( WP_REST_Request $request ) {
 		$name = $request->get_param( 'feature' );
 		$result = enable( $name );
-		
-		// error response received, typically feature not found.
-		if ( is_a( $result, 'WP_Error' ) ) { 
-			return $result;
-		}
+
 		// success
 		if ( $result ) {
 			return new WP_REST_Response(
@@ -184,10 +180,6 @@ class FeaturesAPI extends WP_REST_Controller {
 		$name = $request->get_param( 'feature' );
 		$result = disable( $name );
 
-		// error response received, typically feature not found.
-		if ( is_a( $result, 'WP_Error' ) ) { 
-			return $result;
-		}
 		// success
 		if ( $result ) {
 			return new WP_REST_Response(
@@ -215,12 +207,8 @@ class FeaturesAPI extends WP_REST_Controller {
 		$name = $request['feature'];
 		$result = isEnabled( $name );
 
-		// error response received, typically feature not found.
-		if ( is_a( $result, 'WP_Error' ) ) { 
-			return $result;
-		}
 		return new WP_REST_Response(
-			isEnabled( $request['feature'] ),
+			$result,
 			200
 		);
 	}
