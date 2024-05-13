@@ -10,7 +10,6 @@ use WP_Error;
 use function NewfoldLabs\WP\Module\Features\enable;
 use function NewfoldLabs\WP\Module\Features\disable;
 use function NewfoldLabs\WP\Module\Features\isEnabled;
-use function NewfoldLabs\WP\Module\Features\canToggle;
 
 /**
  * Class FeaturesAPI
@@ -108,7 +107,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	}
 
 	/**
-	 * Callback to validate feature is string
+	 * Callback to validate feature exists
 	 *
 	 * @param string          $param the parameter
 	 * @param WP_REST_Request $request the request
@@ -116,7 +115,7 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return bool
 	 */
 	public function validateFeatureParam( $param, $request, $key ) {
-		return is_string( $param );
+		return $this->features->hasFeature( $param );
 	}
 
 	/**
@@ -151,19 +150,23 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function featureEnable( WP_REST_Request $request ) {
-		$name = $request->get_param( 'feature' );
-		if ( enable( $name ) ) {
+		$name   = $request->get_param( 'feature' );
+		$result = enable( $name );
+
+		// success
+		if ( $result ) {
 			return new WP_REST_Response(
-				true,
+				isEnabled( $name ), // verifying enable was successful since actions could override
 				200
 			);
-		} else {
-			return new WP_Error(
-				'nfd_features_error',
-				'Cannot modify this feature.',
-				array( 'status' => 403 )
-			);
 		}
+
+		// else other error, typically permissions
+		return new WP_Error(
+			'nfd_features_error',
+			'Cannot modify this feature.',
+			array( 'status' => 403 )
+		);
 	}
 
 	/**
@@ -173,19 +176,23 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response object or WP_Error on failure.
 	 */
 	public function featureDisable( WP_REST_Request $request ) {
-		$name = $request->get_param( 'feature' );
-		if ( disable( $name ) ) {
+		$name   = $request->get_param( 'feature' );
+		$result = disable( $name );
+
+		// success
+		if ( $result ) {
 			return new WP_REST_Response(
-				true,
+				! isEnabled( $name ), // verifying enable was successful since actions could override
 				200
 			);
-		} else {
-			return new WP_Error(
-				'nfd_features_error',
-				'Cannot modify this feature.',
-				array( 'status' => 403 )
-			);
 		}
+
+		// else other error, typically permissions
+		return new WP_Error(
+			'nfd_features_error',
+			'Cannot modify this feature.',
+			array( 'status' => 403 )
+		);
 	}
 
 	/**
@@ -195,8 +202,11 @@ class FeaturesAPI extends WP_REST_Controller {
 	 * @return WP_REST_Response The response object.
 	 */
 	public function featureIsEnabled( WP_REST_Request $request ) {
+		$name   = $request['feature'];
+		$result = isEnabled( $name );
+
 		return new WP_REST_Response(
-			isEnabled( $request['feature'] ),
+			$result,
 			200
 		);
 	}

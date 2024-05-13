@@ -38,7 +38,7 @@
 					result.message = `'${ name }' is now enabled`;
 				} else {
 					result.success = false;
-					result.message = 'There was an unexpected error.';
+					result.message = `'${ name }' could not be enabled`;
 				}
 			} )
 			.catch( ( error ) => {
@@ -56,7 +56,7 @@
 	 */
 	const disable = async ( name ) => {
 		const result = {};
-		if ( ! ( await isEnabled( name ) ) ) {
+		if ( false === ( await isEnabled( name ) ) ) {
 			result.success = false;
 			result.message = `'${ name }' is already disabled.`;
 			return result;
@@ -74,7 +74,7 @@
 					result.message = `'${ name }' is now disabled`;
 				} else {
 					result.success = false;
-					result.message = 'There was an unexpected error.';
+					result.message = `'${ name }' could not be disabled`;
 				}
 			} )
 			.catch( ( error ) => {
