@@ -160,7 +160,7 @@ class FeaturesAPI extends WP_REST_Controller {
 				200
 			);
 		}
-		
+
 		// else other error, typically permissions
 		return new WP_Error(
 			'nfd_features_error',
@@ -186,7 +186,7 @@ class FeaturesAPI extends WP_REST_Controller {
 				200
 			);
 		}
-		
+
 		// else other error, typically permissions
 		return new WP_Error(
 			'nfd_features_error',
