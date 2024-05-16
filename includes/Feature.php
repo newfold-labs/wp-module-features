@@ -45,7 +45,7 @@ abstract class Feature {
 		$this->options = $options;
 
 		// check if state already saved to options
-		$this->setValue( $this->options->get( $this->name ) );
+		$this->setValue( $this->options->get( $this->name ) ? $this->options->get( $this->name ) : $this->value );
 
 		// only initialize if enabled
 		if ( $this->isEnabled() ) {
