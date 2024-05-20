@@ -153,7 +153,7 @@ class Features {
 	public static function getFeatures() {
 		$features = array();
 		foreach ( self::getFeatureList() as $feature ) {
-			$features[$feature] = Features::getInstance()->getFeature( $feature )->isEnabled();
+			$features[ $feature ] = Features::getInstance()->getFeature( $feature )->isEnabled();
 		}
 		return $features;
 	}
