@@ -175,7 +175,7 @@ abstract class Feature {
 	 * @return bool True if the feature toggle is allowed, false otherwise.
 	 */
 	public function canToggle() {
-		current_user_can( 'manage_options' )
+		return current_user_can( 'manage_options' );
 	}
 
 	/**
