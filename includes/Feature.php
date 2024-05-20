@@ -131,7 +131,15 @@ abstract class Feature {
 	 * @return bool True if the feature toggle is allowed, false otherwise.
 	 */
 	public function canToggleFeature() {
-		return (bool) current_user_can( 'manage_options' );
+		return (bool) apply_filters(
+			// specific feature canToggle filter
+			"newfold/features/filter/canToggle:{$this->name}",
+			apply_filters(
+				// generic canToggle filter
+				'newfold/features/filter/canToggle',
+				current_user_can( 'manage_options' )
+			)
+		);
 	}
 
 	/**
