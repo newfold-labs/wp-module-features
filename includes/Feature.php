@@ -83,7 +83,7 @@ abstract class Feature {
 	 * @return boolean True if successful, false otherwise
 	 */
 	final public function enable() {
-		if ( $this->canToggleFeature() ) {
+		if ( $this->canToggle() ) {
 
 			// generic feature beforeEnable action
 			do_action( 'newfold/features/action/beforeEnable', $this->name );
@@ -112,7 +112,7 @@ abstract class Feature {
 	 * @return boolean True if successful, false otherwise
 	 */
 	final public function disable() {
-		if ( $this->canToggleFeature() ) {
+		if ( $this->canToggle() ) {
 
 			// generic feature beforeDisable action
 			do_action( 'newfold/features/action/beforeDisable', $this->name );
@@ -153,20 +153,29 @@ abstract class Feature {
 	}
 
 	/**
-	 * Checks if the feature can be toggled - user has permissions to toggle.
+	 * Determine if the features toggle is allowed
 	 *
-	 * @return bool True if the feature toggle is allowed, false otherwise.
+	 * @return bool True if the feature can toggle, false otherwise.
 	 */
-	public function canToggleFeature() {
+	final public function canToggle() {
 		return (bool) apply_filters(
 			// specific feature canToggle filter
 			"newfold/features/filter/canToggle:{$this->name}",
 			apply_filters(
 				// generic canToggle filter
 				'newfold/features/filter/canToggle',
-				current_user_can( 'manage_options' )
+				$this->canToggleFeature()
 			)
 		);
+	}
+
+	/**
+	 * Check if the feature can be toggled with current permissions.
+	 *
+	 * @return bool True if the feature toggle is allowed, false otherwise.
+	 */
+	public function canToggleFeature() {
+		current_user_can( 'manage_options' )
 	}
 
 	/**
