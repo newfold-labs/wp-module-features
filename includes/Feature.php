@@ -50,6 +50,9 @@ abstract class Feature {
 		// only initialize if enabled
 		if ( $this->isEnabled() ) {
 			$this->initialize();
+
+			// specific feature onInitialize action
+			do_action( "newfold/features/action/onInitialize:{$this->name}" );
 		}
 
 		// else not initialized or loaded - does nothing
@@ -81,11 +84,23 @@ abstract class Feature {
 	 */
 	final public function enable() {
 		if ( $this->canToggleFeature() ) {
+
+			// generic feature beforeEnable action
+			do_action( 'newfold/features/action/beforeEnable', $this->name );
+			// specific feature beforeEnable action
+			do_action( "newfold/features/action/beforeEnable:{$this->name}" );
+
 			// generic feature onEnable action
 			do_action( 'newfold/features/action/onEnable', $this->name );
 			// specific feature onEnable action
 			do_action( "newfold/features/action/onEnable:{$this->name}" );
 			$this->setValue( true );
+
+			// generic feature afterEnable action
+			do_action( 'newfold/features/action/afterEnable', $this->name );
+			// specific feature afterEnable action
+			do_action( "newfold/features/action/afterEnable:{$this->name}" );
+
 			return true;
 		}
 		return false;
@@ -98,11 +113,23 @@ abstract class Feature {
 	 */
 	final public function disable() {
 		if ( $this->canToggleFeature() ) {
+
+			// generic feature beforeDisable action
+			do_action( 'newfold/features/action/beforeDisable', $this->name );
+			// specific feature beforeDisable action
+			do_action( "newfold/features/action/beforeDisable:{$this->name}" );
+
 			// generic feature onDisable action
 			do_action( 'newfold/features/action/onDisable', $this->name );
 			// specific feature onDisable action
 			do_action( "newfold/features/action/onDisable:{$this->name}" );
 			$this->setValue( false );
+
+			// generic feature afterDisable action
+			do_action( 'newfold/features/action/afterDisable', $this->name );
+			// specific feature afterDisable action
+			do_action( "newfold/features/action/afterDisable:{$this->name}" );
+
 			return true;
 		}
 		return false;
