@@ -50,6 +50,9 @@ abstract class Feature {
 		// only initialize if enabled
 		if ( $this->isEnabled() ) {
 			$this->initialize();
+
+			// specific feature onInitialize action
+			do_action( "newfold/features/action/onInitialize:{$this->name}" );
 		}
 
 		// else not initialized or loaded - does nothing
