@@ -65,11 +65,12 @@ class Features {
 	 */
 	public static function initFeatures() {
 		// Find extended instances of the Feature class and add to the Registry
-		foreach ( get_declared_classes() as $class ) {
-			if ( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
-				// error_log( 'NewfoldLabs\WP\Module\Features child class found: '.$class );
+		$features = apply_filters( 'newfold/features/filter/register', array() );
+		foreach ( $features as $feature ) {
+			// Validate that the feature extends this
+			if ( is_subclass_of( $feature, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
 				// add class to registry and instantiate
-				self::$registry->set( $class );
+				self::$registry->set( $feature );
 			}
 		}
 	}
@@ -147,12 +148,16 @@ class Features {
 	}
 
 	/**
-	 * Get Features
+	 * Get All Features and filter states
 	 *
 	 * @return Array list of features and enabled states (key:name value:enabled)
 	 */
 	public static function getFeatures() {
-		return self::$registry->all();
+		$features = array();
+		foreach ( self::getFeatureList() as $feature ) {
+			$features[ $feature ] = Features::getInstance()->getFeature( $feature )->isEnabled();
+		}
+		return $features;
 	}
 
 	/**
