@@ -26,13 +26,6 @@ class Features {
 	private static $registry = null;
 
 	/**
-	 * Feature Classes
-	 *
-	 * @var Array
-	 */
-	private static $features = array();
-
-	/**
 	 * Constructor.
 	 */
 	private function __construct() {
@@ -72,7 +65,7 @@ class Features {
 	 */
 	public static function initFeatures() {
 		// Find extended instances of the Feature class and add to the Registry
-		$features = apply_filters( 'newfold/features/filter/register', self::$features );
+		$features = apply_filters( 'newfold/features/filter/register', array() );
 		foreach ( $features as $feature ) {
 			// Validate that the feature extends this
 			if ( is_subclass_of( $feature, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
