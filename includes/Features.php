@@ -67,8 +67,7 @@ class Features {
 		// Find extended instances of the Feature class and add to the Registry
 		foreach ( get_declared_classes() as $class ) {
 			if ( is_subclass_of( $class, 'NewfoldLabs\WP\Module\Features\Feature' ) ) {
-				// error_log( 'NewfoldLabs\WP\Module\Features child class found: '.$class );
-				// add class to registry and instantiate
+				// add class to registry to instantiate
 				self::$registry->set( $class );
 			}
 		}
@@ -147,12 +146,16 @@ class Features {
 	}
 
 	/**
-	 * Get Features
+	 * Get All Features and filter states
 	 *
 	 * @return Array list of features and enabled states (key:name value:enabled)
 	 */
 	public static function getFeatures() {
-		return self::$registry->all();
+		$features = array();
+		foreach ( self::getFeatureList() as $feature ) {
+			$features[ $feature ] = Features::getInstance()->getFeature( $feature )->isEnabled();
+		}
+		return $features;
 	}
 
 	/**
