@@ -1,6 +1,6 @@
 <?php
 
-namespace NewFoldLabs\WP\Module\Features;
+namespace NewfoldLabs\WP\Module\Features;
 
 use WP_REST_Controller;
 use WP_REST_Request;
