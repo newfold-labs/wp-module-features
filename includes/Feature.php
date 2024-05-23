@@ -48,7 +48,7 @@ abstract class Feature {
 			$this->options->get(
 				$this->name,
 				// use default value via defaultValue filter
-				apply_filters( 
+				apply_filters(
 					"newfold/features/filter/defaultValue:{$this->name}",
 					$this->value
 				)
