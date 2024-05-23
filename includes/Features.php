@@ -36,7 +36,7 @@ class Features {
 		if ( function_exists( 'add_action' ) ) {
 
 			// Find and add all features to registry
-			add_action( 'plugins_loaded', array( __CLASS__, 'initFeatures' ), 1 );
+			add_action( 'plugins_loaded', array( __CLASS__, 'initFeatures' ), 3 );
 
 			// Register API endpoints
 			add_action( 'rest_api_init', array( __CLASS__, 'registerRoutes' ) );
