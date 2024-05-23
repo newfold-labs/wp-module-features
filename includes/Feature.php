@@ -43,9 +43,17 @@ abstract class Feature {
 
 		// assign options
 		$this->options = $options;
-
-		// check if state already saved to options
-		$this->setValue( $this->options->get( $this->name, $this->value ) );
+		$this->setValue(
+			// check if state already saved to options
+			$this->options->get(
+				$this->name,
+				// use default value via defaultValue filter
+				apply_filters( 
+					"newfold/features/filter/defaultValue:{$this->name}",
+					$this->value
+				)
+			)
+		);
 
 		// only initialize if enabled
 		if ( $this->isEnabled() ) {
