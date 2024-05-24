@@ -50,13 +50,25 @@ This module manages feature registration and standardizes verifying whether a fe
 
 ## Actions & Filters
 A set of generic hooks as well as dynamic hooks specific to each {featureName}.
+- `newfold/features/filter/register`
+- `newfold/features/filter/canToggle`
+- `newfold/features/filter/canToggle:{$featureName}`
+- `newfold/features/filter/defaultValue:{$featureName}`
 - `newfold/features/filter/isEnabled`
-  - isEnabled
-  - Feature name
+- `newfold/features/filter/isEnabled:{featureName}`
+- `newfold/features/action/onInitialize:{$featureName}`
+- `newfold/features/action/beforeEnable`
+- `newfold/features/action/beforeEnable:{featureName}`
 - `newfold/features/action/onEnable`
-  - Feature name
+- `newfold/features/action/onEnable:{featureName}`
+- `newfold/features/action/afterEnable`
+- `newfold/features/action/afterEnable:{featureName}`
+- `newfold/features/action/beforeDisable`
+- `newfold/features/action/beforeDisable:{featureName}`
 - `newfold/features/action/onDisable`
-  - Feature name
+- `newfold/features/action/onDisable:{featureName}`
+- `newfold/features/action/afterDisable`
+- `newfold/features/action/afterDisable:{featureName}`
 
 ## Feature PHP Class
 - A base class called `NewfoldLabs\WP\Features\Feature` that can be extended.
@@ -84,7 +96,25 @@ A set of generic hooks as well as dynamic hooks specific to each {featureName}.
 - Child class naming convention is `{FeatureName}Feature`.
 
 ## Notes
-- This module is a Composer package and should not use the Newfold module loader.
+- This module is a Composer package and does not use the Newfold module loader.
 - A `NewfoldLabs\WP\Features\Registry` class should be created and have the following methods: has, get, set, remove, keys, reset, all
 - All feature states (on vs. off) should be stored in a single option in the options table, named `newfold_features`. The data structure would be a key/value pair where the key is the feature's name, and the value is a boolean based on whether the feature is enabled.
 - Add a `newfold/features/filter/isEnabled` default filter in the features module to make any null value false. This should be on a priority of 99. If a feature needs to default to true if not set, then the module registering the feature should hook in on the normal priority of 10 and change any null value to true.
+- Enabling/Disabling a feature should send an event.
+
+# Adoption
+
+## Instructions on adding the features module to another module
+The features module will replace the module loader register method. The module will need a Feature class which extends the `NewfoldLabs\WP\Features\Feature` base. Move module setup requirements into the initialization method. Any hook implementation should be in a seperate class so they can still be accessible when the features is disabeld, since a disabled feature will not initialize.
+
+Use the registered features filter to add your class like so:
+```
+if ( function_exists( 'add_filter' ) ) {
+	add_filter(
+		'newfold/features/filter/register',
+		function ( $features ) {
+			return array_merge( $features, array( NewFeature::class ) );
+		}
+	);
+}
+```
