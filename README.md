@@ -79,19 +79,18 @@ A set of generic hooks as well as dynamic hooks specific to each {featureName}.
     - module-specific setup, this should always be overridden in the module Feature class extending this base class.  
   - enable
     - Updates the option in the DB for the feature to be `true` (on)
-    - Applies the `newfold/features/action/onEnable` filter
+    - Applies the `newfold/features/action/onEnable` hook, and similar `before` and `after` actions
   - disable
     - Updates the option in the DB for the feature to be `false` (off)
-    - Applies the `newfold/features/action/onDisable` filter
+    - Applies the `newfold/features/action/onDisable` hook
   - isEnabled
     - Returns boolean based on state stored in DB
     - Applies the `newfold/features/filter/isEnabled` filter
-  - canToggleFeature
+  - canToggle
     - Returns boolean
     - Defaults to true if the user has `manage_options` permission in WordPress
-    - Can be overridden in child class
-- The base class can be extended to register a new feature. If the class extends `NewfoldLabs\WP\Features\Feature` and is auto-loaded via Composer, it will be automatically instantiated, and the object will be automatically added to the registry.
-- The `get_declared_classes()` function will automatically find all applicable feature classes and instantiate them before adding them to the registry by name.
+    - Can be overridden in child class or with filters
+- The base class can be extended to register a new feature. The class should extend `NewfoldLabs\WP\Features\Feature`, and it needs to be added to the `newfold/features/filter/register` hook to be instantiated and added to the registry.
 - Child classes should define a `name` property as the feature name for all API calls. This name will be used in the registry.
 - Child class naming convention is `{FeatureName}Feature`.
 
