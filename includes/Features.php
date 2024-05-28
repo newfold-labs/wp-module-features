@@ -118,6 +118,7 @@ class Features {
 			'NewfoldFeatures',
 			array(
 				'features' => self::getFeatures(),
+				'togglable' => self::getToggleableFeatures(),
 				'restUrl'  => esc_url_raw( rest_url() ) . 'newfold-features/v1',
 			)
 		);
@@ -156,6 +157,19 @@ class Features {
 		$features = array();
 		foreach ( self::getFeatureList() as $feature ) {
 			$features[ $feature ] = Features::getInstance()->getFeature( $feature )->isEnabled();
+		}
+		return $features;
+	}
+
+	/**
+	 * Get All Features and filter states
+	 *
+	 * @return Array list of features and enabled states (key:name value:enabled)
+	 */
+	public static function getToggleableFeatures() {
+		$features = array();
+		foreach ( self::getFeatureList() as $feature ) {
+			$features[ $feature ] = Features::getInstance()->getFeature( $feature )->isTogglable();
 		}
 		return $features;
 	}
