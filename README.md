@@ -21,6 +21,34 @@ This module manages feature registration and standardizes verifying whether a fe
 - A feature status can be checked.
 - Feature functionality should only run if a feature is enabled.
 
+
+# Adoption
+
+The features module standardizes a way for plugins and module to manage features with a consistent architecture and API. Most modules will eventually migrate to the features api, so they can register a feature, and based on the context of the site (the site hosting plan, the environment, brand, purchased products) the plugin can determine the features that will be enabled or disabled. This helps the module system work together in a more predictable and controlled way, but also allows us to expose some of these controls to customers.
+
+For example we have the performance module, and have now added an associated performance feature. The features is enabled by default, but some hosting scenarios perform their own caching, so we don't want the feature to be enabled there. Likewise, some customers would prefer to use a differnt caching solution so we can expose a toggle switch to disable the feature rather than forcing them to choose between keeping the brand plugin active and using  the caching solution they prefer. This way we do not require them to use our performance features and allow more customers to keep the brand plugin installed. 
+
+Another example is wonderblocks. Some customers prefer to use some other pattern library or page builder, and in order to do so, they were disabling the brand plugin since it loads the wonder blocks interface. By allowing customers to disable the feature, we allow them to keep the plugin installed and retain the features they want to use.
+ 
+Adding the a feature and the features api to a module will replace the current module register methods from the module loader. This lets the feature setting control if the feature code is loaded. If the feature is disabled, it will not load anything, so the plugin will always load as fast as possible. For reference look at these PRs where it is integrated with the [patterns module](https://github.com/newfold-labs/wp-module-patterns/pull/74), the [performance module](https://github.com/newfold-labs/wp-module-performance/pull/22), and the [staging module](https://github.com/newfold-labs/wp-module-staging/pull/26)
+
+## Implementation
+The module will need a Feature class which extends the `NewfoldLabs\WP\Features\Feature` base. Any hook implementation should be in a seperate class so they can still be accessible when the features is disabeld, since a disabled feature will not initialize.
+
+Move module setup requirements into the initialization method of the Feature class. The features module will replace the module loader register method. Rather than loading the module via `NewfoldLabs\WP\ModuleLoader\register`, use a `newfold/features/filter/register` hook to add the new feature class the the list of features. It will then load properly and can be enabled or disabled either by our contextual code with hooks, or by the customers in our plugin settings if the toggle is added. Here is where the features module and toggles are added to the [bluehost plugin](https://github.com/bluehost/bluehost-wordpress-plugin/pull/1067) and the [hostgator plugin](https://github.com/newfold-labs/wp-plugin-hostgator/pull/576)
+
+Use the registered features filter to add your class like so:
+```
+if ( function_exists( 'add_filter' ) ) {
+	add_filter(
+		'newfold/features/filter/register',
+		function ( $features ) {
+			return array_merge( $features, array( MyNewFeature::class ) );
+		}
+	);
+}
+```
+
 ## API
 
 ### PHP Functions
@@ -100,20 +128,3 @@ A set of generic hooks as well as dynamic hooks specific to each {featureName}.
 - All feature states (on vs. off) should be stored in a single option in the options table, named `newfold_features`. The data structure would be a key/value pair where the key is the feature's name, and the value is a boolean based on whether the feature is enabled.
 - Add a `newfold/features/filter/isEnabled` default filter in the features module to make any null value false. This should be on a priority of 99. If a feature needs to default to true if not set, then the module registering the feature should hook in on the normal priority of 10 and change any null value to true.
 - Enabling/Disabling a feature should send an event.
-
-# Adoption
-
-## Instructions on adding the features module to another module
-The features module will replace the module loader register method. The module will need a Feature class which extends the `NewfoldLabs\WP\Features\Feature` base. Move module setup requirements into the initialization method. Any hook implementation should be in a seperate class so they can still be accessible when the features is disabeld, since a disabled feature will not initialize.
-
-Use the registered features filter to add your class like so:
-```
-if ( function_exists( 'add_filter' ) ) {
-	add_filter(
-		'newfold/features/filter/register',
-		function ( $features ) {
-			return array_merge( $features, array( NewFeature::class ) );
-		}
-	);
-}
-```
