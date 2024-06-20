@@ -95,17 +95,10 @@
 	};
 
 	// Set up the localized features object with methods
-	const attachMethodsToObject = () => {
-		const methods = {
-			isEnabled,
-			enable,
-			disable,
-		};
-		window.NewfoldFeatures = { ...window.NewfoldFeatures, ...methods };
+	const methods = {
+		isEnabled,
+		enable,
+		disable,
 	};
-
-	// Attach methods when DOM is ready
-	window.addEventListener( 'DOMContentLoaded', () => {
-		attachMethodsToObject();
-	} );
+	window.NewfoldFeatures = { ...window.NewfoldFeatures, ...methods };
 }
