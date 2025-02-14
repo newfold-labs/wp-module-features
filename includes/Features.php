@@ -26,12 +26,21 @@ class Features {
 	private static $registry = null;
 
 	/**
+	 * Module Path
+	 *
+	 * @var String
+	 */
+	private static $modulePath = null;
+
+	/**
 	 * Constructor.
 	 */
 	private function __construct() {
 
 		// Create registry
 		self::$registry = new Registry();
+
+		self::$modulePath = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features';
 
 		if ( function_exists( 'add_action' ) ) {
 
@@ -47,6 +56,7 @@ class Features {
 			// Register API script and localized values
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 
+			\add_action( 'init', array( __CLASS__, 'load_text_domain' ), 100 );
 		}
 
 		// Add default filter to make any feature null value return false
@@ -121,6 +131,12 @@ class Features {
 				'togglable' => self::getToggleableFeatures(),
 				'restUrl'  => esc_url_raw( rest_url() ) . 'newfold-features/v1',
 			)
+		);
+
+		\wp_set_script_translations(
+			'newfold-features',
+			'wp-module-features',
+			self::$modulePath . '/languages'
 		);
 	}
 	/**
@@ -201,5 +217,27 @@ class Features {
 	 */
 	public static function hasFeature( $name ) {
 		return self::$registry->has( $name );
+	}
+
+	/**
+	 * Load text domain for Module
+	 *
+	 * @return void
+	 */
+	public static function load_text_domain() {
+
+		$modulePath = container()->plugin()->url . 'vendor/newfold-labs/wp-module-features';
+
+		\load_plugin_textdomain(
+			'wp-module-features',
+			false,
+			$modulePath . '/languages'
+		);
+
+		\load_script_textdomain(
+			'newfold-features',
+			'wp-module-features',
+			self::$modulePath . '/languages'
+		);
 	}
 }
