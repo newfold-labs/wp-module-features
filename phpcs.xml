@@ -12,4 +12,10 @@
         <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
         <exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"/>
     </rule>
+
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array" value="wp-module-features" />
+        </properties>
+    </rule>
 </ruleset>
