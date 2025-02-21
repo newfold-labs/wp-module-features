@@ -117,7 +117,7 @@ class Features {
 		wp_register_script(
 			'newfold-features',
 			$scriptPath,
-			array( 'wp-api-fetch' ),
+			array( 'wp-api-fetch', 'wp-i18n' ),
 			container()->plugin()->version,
 			true
 		);
