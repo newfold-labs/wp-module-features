@@ -1,9 +1,6 @@
-/**
- * Features JS API
- * JS interface for the features module and feature management
- */
 {
-	const { __ } = wp.i18n;
+	const { __, sprintf } = wp.i18n;
+
 	/**
 	 * Helper method to check if a feature is enabled by name
 	 *
@@ -23,7 +20,7 @@
 		const result = {};
 		if ( await isEnabled( name ) ) {
 			result.success = false;
-			result.message = __( `'${ name }' is already enabled.`, 'wp-module-features' );
+			result.message = sprintf( __( "'%s' is already enabled.", 'wp-module-features' ), name );
 			return result;
 		}
 
@@ -36,10 +33,10 @@
 				if ( response === true ) {
 					updateFeature( name, true );
 					result.success = true;
-					result.message = __( `'${ name }' is now enabled`, 'wp-module-features' );
+					result.message = sprintf( __( "'%s' is now enabled", 'wp-module-features' ), name );
 				} else {
 					result.success = false;
-					result.message = __( `'${ name }' could not be enabled`, 'wp-module-features' );
+					result.message = sprintf( __( "'%s' could not be enabled", 'wp-module-features' ), name );
 				}
 			} )
 			.catch( ( error ) => {
@@ -59,7 +56,7 @@
 		const result = {};
 		if ( false === ( await isEnabled( name ) ) ) {
 			result.success = false;
-			result.message = __( `'${ name }' is already disabled.`, 'wp-module-features' );
+			result.message = sprintf( __( "'%s' is already disabled.", 'wp-module-features' ), name );
 			return result;
 		}
 
@@ -72,10 +69,10 @@
 				if ( response === true ) {
 					updateFeature( name, false );
 					result.success = true;
-					result.message = __( `'${ name }' is now disabled`, 'wp-module-features' );
+					result.message = sprintf( __( "'%s' is now disabled", 'wp-module-features' ), name );
 				} else {
 					result.success = false;
-					result.message = __( `'${ name }' could not be disabled`, 'wp-module-features' );
+					result.message = sprintf( __( "'%s' could not be disabled", 'wp-module-features' ), name );
 				}
 			} )
 			.catch( ( error ) => {
