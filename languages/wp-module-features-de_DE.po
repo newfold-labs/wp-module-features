@@ -9,6 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T10:07:39+00:00\n"
 "PO-Revision-Date: 2025-02-19 16:18\n"
+"Language: de_DE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-features\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,7 +18,6 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: wp-module-features.pot\n"
 "X-Crowdin-File-ID: 46\n"
-"Language: de_DE\n"
 
 #: includes/FeaturesCLI.php:74
 #: includes/FeaturesCLI.php:95
@@ -30,3 +30,26 @@ msgstr "Ungültiger Eigenschaftsname: "
 msgid "Invalid JSON response"
 msgstr "Ungültige JSON-Antwort"
 
+#: static/js/features.js:23
+msgid "'%s' is already enabled."
+msgstr "'%s' ist bereits aktiviert."
+
+#: static/js/features.js:36
+msgid "'%s' is now enabled"
+msgstr "'%s' ist jetzt aktiviert."
+
+#: static/js/features.js:39
+msgid "'%s' could not be enabled"
+msgstr "'%s' konnte nicht aktiviert werden."
+
+#: static/js/features.js:59
+msgid "'%s' is already disabled."
+msgstr "'%s' ist bereits deaktiviert."
+
+#: static/js/features.js:72
+msgid "'%s' is now disabled"
+msgstr "'%s' ist jetzt deaktiviert."
+
+#: static/js/features.js:75
+msgid "'%s' could not be disabled"
+msgstr "'%s' konnte nicht deaktiviert werden."
