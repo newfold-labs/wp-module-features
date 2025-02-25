@@ -71,7 +71,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 		} else {
 			$response = array(
 				'status'  => 'error',
-				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
+				'message' => __( 'Invalid feature name: ', 'wp-module-features' ) . $name,
 			);
 		}
 		$this->render( $response );
@@ -92,7 +92,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 		} else {
 			$response = array(
 				'status'  => 'error',
-				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
+				'message' => __( 'Invalid feature name: ', 'wp-module-features' ) . $name,
 			);
 		}
 		$this->render( $response );
@@ -113,7 +113,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 		} else {
 			$response = array(
 				'status'  => 'error',
-				'message' => __( 'Invalid feature name: ', 'newfold-features-module' ) . $name,
+				'message' => __( 'Invalid feature name: ', 'wp-module-features' ) . $name,
 			);
 		}
 		$this->render( $response );
@@ -127,14 +127,14 @@ class FeaturesCLI extends \WP_CLI_Command {
 	protected function render( $data ) {
 		$response = array(
 			'status'  => 'error',
-			'message' => __( 'Invalid JSON response', 'newfold-features-module' ),
+			'message' => __( 'Invalid JSON response', 'wp-module-features' ),
 		);
 
 		switch ( gettype( $data ) ) {
 			case 'boolean':
 				$response = array(
 					'status'  => 'success',
-					'message' => __( 'Invalid JSON response', 'newfold-features-module' ),
+					'message' => __( 'Invalid JSON response', 'wp-module-features' ),
 				);
 				break;
 			case 'string':
