@@ -14,14 +14,14 @@ msgstr ""
 "X-Domain: wp-module-features\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: includes/FeaturesCLI.php:74
-#: includes/FeaturesCLI.php:95
-#: includes/FeaturesCLI.php:116
+#: includes/FeaturesCLI.php:75
+#: includes/FeaturesCLI.php:96
+#: includes/FeaturesCLI.php:117
 msgid "Invalid feature name: "
 msgstr "Invalid feature name: "
 
-#: includes/FeaturesCLI.php:130
-#: includes/FeaturesCLI.php:137
+#: includes/FeaturesCLI.php:131
+#: includes/FeaturesCLI.php:138
 msgid "Invalid JSON response"
 msgstr "Invalid JSON response"
 
@@ -48,3 +48,26 @@ msgstr "'%s' is now disabled."
 #: static/js/features.js:75
 msgid "'%s' could not be disabled"
 msgstr "'%s' could not be disabled."
+
+#: includes/FeaturesAPI.php:167
+#: includes/FeaturesAPI.php:193
+msgid "Cannot modify this feature."
+msgstr "Cannot modify this feature."
+
+#: includes/FeaturesCLI.php:21
+msgid "No sub-command provided"
+msgstr "No sub-command provided"
+
+#: includes/FeaturesCLI.php:43
+msgid "Invalid action"
+msgstr "Invalid action"
+
+#: includes/FeaturesCLI.php:298
+msgid "Provided $data wasn't valid array or JSON string."
+msgstr "Provided $data wasn't a valid array or JSON string."
+
+#: includes/functions.php:19
+#: includes/functions.php:37
+#: includes/functions.php:55
+msgid "Feature not found"
+msgstr "Feature not found"

@@ -19,14 +19,14 @@ msgstr ""
 "X-Crowdin-File: wp-module-features.pot\n"
 "X-Crowdin-File-ID: 46\n"
 
-#: includes/FeaturesCLI.php:74
-#: includes/FeaturesCLI.php:95
-#: includes/FeaturesCLI.php:116
+#: includes/FeaturesCLI.php:75
+#: includes/FeaturesCLI.php:96
+#: includes/FeaturesCLI.php:117
 msgid "Invalid feature name: "
 msgstr "Nome funzione non valido: "
 
-#: includes/FeaturesCLI.php:130
-#: includes/FeaturesCLI.php:137
+#: includes/FeaturesCLI.php:131
+#: includes/FeaturesCLI.php:138
 msgid "Invalid JSON response"
 msgstr "Risposta JSON non valida"
 
@@ -53,3 +53,26 @@ msgstr "'%s' è ora disabilitato."
 #: static/js/features.js:75
 msgid "'%s' could not be disabled"
 msgstr "'%s' non può essere disabilitato."
+
+#: includes/FeaturesAPI.php:167
+#: includes/FeaturesAPI.php:193
+msgid "Cannot modify this feature."
+msgstr "Impossibile modificare questa funzionalità."
+
+#: includes/FeaturesCLI.php:21
+msgid "No sub-command provided"
+msgstr "Nessun sottocomando fornito"
+
+#: includes/FeaturesCLI.php:43
+msgid "Invalid action"
+msgstr "Azione non valida"
+
+#: includes/FeaturesCLI.php:298
+msgid "Provided $data wasn't valid array or JSON string."
+msgstr "I dati forniti non erano un array valido o una stringa JSON valida."
+
+#: includes/functions.php:19
+#: includes/functions.php:37
+#: includes/functions.php:55
+msgid "Feature not found"
+msgstr "Funzionalità non trovata"
