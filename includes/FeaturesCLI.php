@@ -18,7 +18,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 	public function __invoke( $args, $assoc_args ) {
 
 		if ( ! is_array( $args ) || ! isset( $args[0] ) ) {
-			$this->error( 'No sub-command provided' );
+			$this->error( __( 'No sub-command provided', 'wp-module-features' ) );
 		}
 
 		switch ( $args[0] ) {
@@ -40,7 +40,8 @@ class FeaturesCLI extends \WP_CLI_Command {
 				break;
 
 			default:
-				$this->error( 'Invalid action' );
+				$this->error( __( 'Invalid action', 'wp-module-features' ) );
+
 		}
 	}
 
@@ -294,7 +295,7 @@ class FeaturesCLI extends \WP_CLI_Command {
 		} elseif ( is_array( json_decode( $data, true ) ) ) {
 			\WP_CLI::log( $data );
 		} else {
-			$this->error( 'Provided $data wasn\'t valid array or JSON string.' );
+			$this->error( __( 'Provided $data wasn\'t valid array or JSON string.', 'wp-module-features' ) );
 		}
 	}
 
