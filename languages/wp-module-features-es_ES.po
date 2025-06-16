@@ -53,3 +53,8 @@ msgstr "'%s' está ahora desactivado."
 #: static/js/features.js:75
 msgid "'%s' could not be disabled"
 msgstr "'%s' no se pudo desactivar."
+
+#: wordpress/wp-includes/blocks/widget-group/block.json
+msgctxt "block title"
+msgid "Widget Group"
+msgstr ""
