@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1752851953">
-  <project timestamp="1752851953">
+<coverage generated="1752852001">
+  <project timestamp="1752852001">
     <file name="/home/runner/work/wp-module-features/wp-module-features/includes/Feature.php">
       <class name="NewfoldLabs\WP\Module\Features\Feature" namespace="global">
         <metrics complexity="12" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="52" coveredstatements="0" elements="61" coveredelements="0"/>
