@@ -69,8 +69,3 @@ msgstr ""
 #: static/js/features.js:75
 msgid "'%s' could not be disabled"
 msgstr ""
-
-#: wordpress/wp-includes/blocks/widget-group/block.json
-msgctxt "block title"
-msgid "Widget Group"
-msgstr ""
