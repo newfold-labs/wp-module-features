@@ -1,21 +1,21 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-features/issues\n"
+"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
+"PO-Revision-Date: 2025-05-07 12:37+0100\n"
 "Last-Translator: Carlos Rodriguez <carlos.rodriguez@newfold.com>\n"
 "Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge.net>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-13T09:55:55+00:00\n"
-"PO-Revision-Date: 2025-05-07 12:37+0100\n"
-"Language: pt_BR\n"
-"X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: wp-module-features\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: wp-module-features\n"
+"X-Generator: WP-CLI 2.11.0\n"
 
-#: includes/FeaturesAPI.php:167
-#: includes/FeaturesAPI.php:193
+#: includes/FeaturesAPI.php:167 includes/FeaturesAPI.php:193
 msgid "Cannot modify this feature."
 msgstr "Não é possível modificar este recurso."
 
@@ -27,14 +27,12 @@ msgstr "Nenhum subcomando fornecido"
 msgid "Invalid action"
 msgstr "Ação inválida"
 
-#: includes/FeaturesCLI.php:75
-#: includes/FeaturesCLI.php:96
+#: includes/FeaturesCLI.php:75 includes/FeaturesCLI.php:96
 #: includes/FeaturesCLI.php:117
 msgid "Invalid feature name: "
 msgstr "Nome de recurso inválido: "
 
-#: includes/FeaturesCLI.php:131
-#: includes/FeaturesCLI.php:138
+#: includes/FeaturesCLI.php:131 includes/FeaturesCLI.php:138
 msgid "Invalid JSON response"
 msgstr "Resposta JSON inválida"
 
@@ -42,8 +40,7 @@ msgstr "Resposta JSON inválida"
 msgid "Provided $data wasn't valid array or JSON string."
 msgstr "Os dados fornecidos não são um array válido ou uma string JSON."
 
-#: includes/functions.php:19
-#: includes/functions.php:37
+#: includes/functions.php:19 includes/functions.php:37
 #: includes/functions.php:55
 msgid "Feature not found"
 msgstr "Recurso não encontrado"
