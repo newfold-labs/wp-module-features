@@ -76,3 +76,8 @@ msgstr "Los datos proporcionados no eran un array válido o una cadena JSON."
 #: includes/functions.php:55
 msgid "Feature not found"
 msgstr "Funcionalidad no encontrada"
+
+#: wordpress/wp-includes/blocks/widget-group/block.json
+msgctxt "block title"
+msgid "Widget Group"
+msgstr ""

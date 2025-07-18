@@ -76,3 +76,8 @@ msgstr "Die bereitgestellten $Daten waren kein gültiges Array oder eine gültig
 #: includes/functions.php:55
 msgid "Feature not found"
 msgstr "Funktion nicht gefunden"
+
+#: wordpress/wp-includes/blocks/widget-group/block.json
+msgctxt "block title"
+msgid "Widget Group"
+msgstr ""
