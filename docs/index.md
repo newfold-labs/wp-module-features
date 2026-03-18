@@ -1,3 +1,10 @@
+---
+name: wp-module-features
+title: Documentation index
+description: Table of contents and quick links.
+updated: 2025-03-18
+---
+
 # wp-module-features – Documentation index
 
 Documentation for wp-module-features, for **humans** and **AI agents**. Start here.

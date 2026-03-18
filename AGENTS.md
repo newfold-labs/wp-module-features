@@ -42,7 +42,7 @@ composer run i18n-pot   # and i18n, i18n-json, etc.
 
 ## Keeping documentation current
 
-**When you change code, features, or workflows, update the docs so they stay accurate.**
+**When you change code, features, or workflows, update the docs so they stay accurate.** Keep **docs/index.md** current: when you add, remove, or rename doc files, update the table of contents (and quick links if present).
 
 - Keep all docs current, not only the ones listed here.
 - When adding or changing REST routes, update **docs/api.md**. When adding or changing dependencies, update **dependencies.md**. When cutting a release, update **docs/changelog.md**.

@@ -1,3 +1,10 @@
+---
+name: wp-module-features
+title: REST API
+description: REST API or public API reference.
+updated: 2025-03-18
+---
+
 # REST API
 
 The module registers REST routes under the **`newfold-features/v1`** namespace. All routes require permission (typically `manage_options`). Base URL: `{site}/wp-json/newfold-features/v1`.
