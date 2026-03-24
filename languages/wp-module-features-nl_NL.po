@@ -1,16 +1,15 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13T10:07:39+00:00\n"
-"PO-Revision-Date: 2025-02-19 16:18\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
-"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-13T10:07:39+00:00\n"
+"PO-Revision-Date: 2025-02-19 16:18\n"
+"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-features.pot\n"
 "X-Crowdin-File-ID: 46\n"
@@ -20,12 +19,14 @@ msgstr ""
 "X-Domain: wp-module-features\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: includes/FeaturesCLI.php:75 includes/FeaturesCLI.php:96
+#: includes/FeaturesCLI.php:75
+#: includes/FeaturesCLI.php:96
 #: includes/FeaturesCLI.php:117
 msgid "Invalid feature name: "
 msgstr "Ongeldige kenmerk naam: "
 
-#: includes/FeaturesCLI.php:131 includes/FeaturesCLI.php:138
+#: includes/FeaturesCLI.php:131
+#: includes/FeaturesCLI.php:138
 msgid "Invalid JSON response"
 msgstr "Ongeldig JSON-antwoord"
 
@@ -53,7 +54,8 @@ msgstr "'%s' is nu uitgeschakeld."
 msgid "'%s' could not be disabled"
 msgstr "'%s' kon niet worden uitgeschakeld."
 
-#: includes/FeaturesAPI.php:167 includes/FeaturesAPI.php:193
+#: includes/FeaturesAPI.php:167
+#: includes/FeaturesAPI.php:193
 msgid "Cannot modify this feature."
 msgstr "Deze functie kan niet worden gewijzigd."
 
@@ -69,7 +71,8 @@ msgstr "Ongeldige actie"
 msgid "Provided $data wasn't valid array or JSON string."
 msgstr "De opgegeven $data was geen geldig array of JSON-string."
 
-#: includes/functions.php:19 includes/functions.php:37
+#: includes/functions.php:19
+#: includes/functions.php:37
 #: includes/functions.php:55
 msgid "Feature not found"
 msgstr "Functie niet gevonden"
