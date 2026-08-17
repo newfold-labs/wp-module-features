@@ -80,6 +80,9 @@
         "lint": [
             "vendor/bin/phpcs . --standard=phpcs.xml -s"
         ],
+        "workflow-compliance": [
+            "ruby scripts/verify-workflow-compliance.rb"
+        ],
         "test": [
             "codecept run wpunit"
         ],
@@ -99,6 +102,7 @@
         "i18n-po": "Update PO files from the POT file using wp i18n update-po.",
         "i18n-pot": "Scan source and generate the POT translation template using wp i18n make-pot.",
         "lint": "Check files against coding standards.",
+        "workflow-compliance": "Verify GitHub Actions workflows against the organization's permissions/timeouts audit rules.",
         "test": "Run tests.",
         "test-coverage": "Run tests with coverage, merge coverage and create HTML report."
     }
