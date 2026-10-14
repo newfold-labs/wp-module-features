@@ -23,7 +23,6 @@ jobs:
     permissions:
       contents: write      # Required for reusable-translations jobs that push branches (prepare-pr-branch, create-translation-pr).
       pull-requests: write # Required for gh pr create and related PR updates in the reusable translation workflow.
-    timeout-minutes: 120
     with:
       text_domain: 'wp-module-features'
     secrets:
